@@ -5,31 +5,13 @@ import SocialloginButton from '@/components/SocialLoginButton';
 
 export default async function Login() {
 	return (
-		<div className='flex-1 flex flex-col w-full px-8 sm:max-w-2xl justify-center gap-2'>
-			<Link
-				href='/'
-				className='absolute font-semibold  left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-lg'>
-				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					width='32'
-					height='32'
-					viewBox='0 0 24 24'
-					fill='none'
-					stroke='currentColor'
-					strokeWidth='2'
-					strokeLinecap='round'
-					strokeLinejoin='round'
-					className='mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1'>
-					<polyline points='15 18 9 12 15 6' />
-				</svg>{' '}
-				Back
-			</Link>
-			<div className='flex flex-col gap-3'>
+		<div className='flex flex-col w-full m-auto px-8 sm:max-w-2xl justify-center gap-2 h-screen max-h-[calc(100vh-68px)] space-y-8 text-lg'>
+			<div className='flex flex-col gap-3 '>
 				<SocialloginButton provider='google' />
 				<SocialloginButton provider='github' />
 			</div>
 			<form
-				className=' flex flex-col w-full justify-center gap-2 text-foreground'
+				className=' flex flex-col w-full justify-center gap-1 text-foreground'
 				action='/auth/sign-in'
 				method='post'>
 				<label className='text-md' htmlFor='email'>
@@ -56,7 +38,7 @@ export default async function Login() {
 				</button>
 				<button
 					formAction='/auth/sign-up'
-					className='border border-gray-700 rounded px-4 py-2 text-white mb-2'>
+					className='border border-gray-700 rounded px-4 py-2  mb-2'>
 					Sign Up
 				</button>
 				<Messages />
