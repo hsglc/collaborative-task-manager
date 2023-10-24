@@ -1,4 +1,4 @@
-import { createTask } from '@/lib/supabase/createTask';
+import { editTask } from '@/lib/supabase/editTask';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,24 +11,44 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-
 import { TaskActionButton } from './TaskActionButton';
 
-export function CreateTaskForm() {
+type Props = {
+	data: {
+		id: number;
+		name: string;
+		description: string;
+		createdAt: string;
+		priority: 'Low' | 'Medium' | 'High';
+		status: string;
+	};
+};
+
+export function EditTaskForm({ data }: Props) {
 	return (
-		<form className='text-white text-lg space-y-4' action={createTask}>
+		<form
+			className='text-white text-lg space-y-4'
+			action={(formData: FormData) => editTask(formData, data.id)}>
 			<Label className='flex flex-col gap-2'>
 				Name
-				<Input name='name' className='text-black' />
+				<Input
+					name='name'
+					className='text-black'
+					defaultValue={data.name}
+				/>
 			</Label>
 			<Label className='flex flex-col gap-2'>
 				Description
-				<Input name='description' className='text-black' />
+				<Input
+					name='description'
+					className='text-black'
+					defaultValue={data.description}
+				/>
 			</Label>
 
 			<Label className='flex flex-col gap-2'>
 				Priority
-				<Select name='priority'>
+				<Select name='priority' defaultValue={data.priority}>
 					<SelectTrigger className='w-full text-black'>
 						<SelectValue placeholder='Select the priority' />
 					</SelectTrigger>
@@ -44,7 +64,7 @@ export function CreateTaskForm() {
 			</Label>
 			<Label className='flex flex-col gap-2'>
 				Status
-				<Select name='status'>
+				<Select name='status' defaultValue={data.status}>
 					<SelectTrigger className='w-full text-black'>
 						<SelectValue placeholder='Select the status' />
 					</SelectTrigger>
@@ -60,7 +80,7 @@ export function CreateTaskForm() {
 					</SelectContent>
 				</Select>
 			</Label>
-			<TaskActionButton type="create" />
+			<TaskActionButton type='edit' />
 		</form>
 	);
 }
