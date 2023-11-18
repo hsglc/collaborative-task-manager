@@ -1,26 +1,18 @@
 import { Task } from '@/components/Task';
 
+import { Task as NewTask } from '@/types/tasks';
+
 type Props = {
-	tasks: {
-		id: number;
-		name: string;
-		description: string;
-		assignee: string;
-		createdBy: string;
-		createdAt: string;
-		priority: 'Low' | 'Medium' | 'High';
-		status: string;
-	}[];
+	tasks: NewTask[];
 };
 
 export const Tasks = ({ tasks }: Props) => {
 	return (
-		<div className='col-span-5 bg-primary p-4 space-y-8 max-h-max overflow-scroll'>
+		<div className='col-span-6 bg-primary p-4 space-y-8 max-h-max overflow-scroll'>
 			<h2 className='text-xl font-medium'>All Tasks ({tasks?.length})</h2>
 			{tasks?.map((task) => (
-				<Task key={task.id} data={task} />
+				<Task key={task.id} task={task} />
 			))}
 		</div>
 	);
 };
-

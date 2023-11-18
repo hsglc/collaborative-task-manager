@@ -9,6 +9,7 @@ type Props = {
 		importantTasksNumber?: number;
 		completedTasksNumber?: number;
 		uncompletedTasksNumber?: number;
+		sharedTasksNumber?: number;
 	};
 };
 
@@ -18,6 +19,7 @@ export const SidebarLinks = ({ numberOfTasks }: Props) => {
 		completedTasksNumber,
 		importantTasksNumber,
 		uncompletedTasksNumber,
+		sharedTasksNumber,
 	} = numberOfTasks;
 
 	const buttons = {
@@ -41,6 +43,11 @@ export const SidebarLinks = ({ numberOfTasks }: Props) => {
 			search: 'uncompleted',
 			sizeOfTasks: uncompletedTasksNumber,
 		},
+		shared: {
+			name: 'Shared tasks',
+			search: 'shared',
+			sizeOfTasks: sharedTasksNumber,
+		},
 	};
 
 	const { push } = useRouter();
@@ -60,7 +67,9 @@ export const SidebarLinks = ({ numberOfTasks }: Props) => {
 							searchParams === search ? 'bg-next text-white' : ''
 						)}>
 						{name} ({sizeOfTasks})
-						{searchParams === search ? <span className='absolute right-0 bg-white w-1 h-full'/> : null}
+						{searchParams === search ? (
+							<span className='absolute right-0 bg-white w-1 h-full' />
+						) : null}
 					</button>
 				);
 			})}

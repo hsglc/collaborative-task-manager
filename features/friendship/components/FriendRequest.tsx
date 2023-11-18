@@ -2,41 +2,20 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 import { Button } from '@/components/ui/button';
 
-type Props = {
-	notification: {
-		id: number;
-		status: string;
-		sender_email: string;
-		receiver_email: string;
-		created_at: string;
-	};
-	currentUserEmail: string;
-};
-
-export const FriendRequest = ({
-	notification: {
-		sender_email: senderEmail,
-		receiver_email: receiverEmail,
-		status,
-		created_at: createdAt,
-	},
-	currentUserEmail,
-}: Props) => {
+export const FriendRequest = () => {
 	const supabase = createClientComponentClient();
 
 	const acceptRequestHandler = async () => {
-		await supabase.from('friends').update({ status: 'Approved' }).match({
-			sender_email: senderEmail,
-			receiver_email: receiverEmail,
-		});
+		await supabase.from('friends').update({ status: 'Approved' });
 	};
 
 	const rejectRequestHandler = async () => {
-		await supabase.from('friends').update({ status: 'Rejected' }).match({
-			sender_email: senderEmail,
-			receiver_email: receiverEmail,
-		});
+		await supabase.from('friends').update({ status: 'Rejected' });
 	};
+
+	const senderEmail = 'Test';
+
+	let status = 'Test';
 
 	return (
 		<div className='text-white rounded-lg p-6 border border-white space-y-2 shadow-md'>

@@ -1,4 +1,4 @@
-import { createTask } from '@/lib/supabase/createTask';
+import { createTask } from '@/features/createTask/actions/createTaskAction';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +12,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 
-import { TaskActionButton } from './TaskActionButton';
+import { TaskActionButton } from '../../../components/TaskActionButton';
 
 export function CreateTaskForm() {
 	return (
@@ -51,16 +51,20 @@ export function CreateTaskForm() {
 					<SelectContent>
 						<SelectGroup>
 							<SelectLabel>Status</SelectLabel>
-							<SelectItem value='Todo'>Todo</SelectItem>
+							<SelectItem value='Backlog'>Backlog</SelectItem>
 							<SelectItem value='In Progress'>
 								In Progress
 							</SelectItem>
-							<SelectItem value='Completed'>Completed</SelectItem>
+							<SelectItem value='Waiting Approval'>
+								Waiting Approval
+							</SelectItem>
+
+							<SelectItem value='Done'>Done</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
 			</Label>
-			<TaskActionButton type="create" />
+			<TaskActionButton type='create' />
 		</form>
 	);
 }

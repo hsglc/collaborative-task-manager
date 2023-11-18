@@ -1,4 +1,4 @@
-import { editTask } from '@/lib/supabase/editTask';
+import { editTask } from '@/features/editTask/actions/editTaskAction';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,30 +11,27 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { TaskActionButton } from './TaskActionButton';
+import { TaskActionButton } from '../../../components/TaskActionButton';
+
+import { Task } from '@/types/tasks';
 
 type Props = {
-	data: {
-		id: number;
-		name: string;
-		description: string;
-		createdAt: string;
-		priority: 'Low' | 'Medium' | 'High';
-		status: string;
-	};
+	task: Task;
 };
 
-export function EditTaskForm({ data }: Props) {
+export function EditTaskForm({ task }: Props) {
 	return (
 		<form
 			className='text-white text-lg space-y-4'
-			action={(formData: FormData) => editTask(formData, data.id)}>
+			action={(formData: FormData) =>
+				editTask(formData, task.id, task.created_by)
+			}>
 			<Label className='flex flex-col gap-2'>
 				Name
 				<Input
 					name='name'
 					className='text-black'
-					defaultValue={data.name}
+					defaultValue={task.name}
 				/>
 			</Label>
 			<Label className='flex flex-col gap-2'>
@@ -42,13 +39,13 @@ export function EditTaskForm({ data }: Props) {
 				<Input
 					name='description'
 					className='text-black'
-					defaultValue={data.description}
+					defaultValue={task.description}
 				/>
 			</Label>
 
 			<Label className='flex flex-col gap-2'>
 				Priority
-				<Select name='priority' defaultValue={data.priority}>
+				<Select name='priority' defaultValue={task.priority}>
 					<SelectTrigger className='w-full text-black'>
 						<SelectValue placeholder='Select the priority' />
 					</SelectTrigger>
@@ -64,18 +61,21 @@ export function EditTaskForm({ data }: Props) {
 			</Label>
 			<Label className='flex flex-col gap-2'>
 				Status
-				<Select name='status' defaultValue={data.status}>
+				<Select name='status' defaultValue={task.status}>
 					<SelectTrigger className='w-full text-black'>
 						<SelectValue placeholder='Select the status' />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
 							<SelectLabel>Status</SelectLabel>
-							<SelectItem value='Todo'>Todo</SelectItem>
+							<SelectItem value='Backlog'>Backlog</SelectItem>
 							<SelectItem value='In Progress'>
 								In Progress
 							</SelectItem>
-							<SelectItem value='Completed'>Completed</SelectItem>
+							<SelectItem value='Waiting Approval'>
+								Waiting Approval
+							</SelectItem>
+							<SelectItem value='Done'>Done</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
