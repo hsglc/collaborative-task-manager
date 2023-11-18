@@ -1,6 +1,3 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-
 import './globals.css';
 import Header from '@/components/shared/Header';
 
@@ -14,11 +11,6 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const supabase = createServerComponentClient({ cookies });
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
 	return (
 		<html lang='en'>
 			<body className='text-white bg-primary'>
