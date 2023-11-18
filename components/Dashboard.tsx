@@ -1,4 +1,4 @@
-import { fetchTasks } from '@/lib/supabase/fetchTasks';
+import { fetchTasks } from '@/features/tasks/actions/fetchTasks';
 
 import { Sidebar, Tasks } from '@/components/containers';
 
