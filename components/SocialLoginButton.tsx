@@ -39,8 +39,6 @@ const SocialLoginButton = ({ provider }: Props) => {
 		return url;
 	};
 
-	console.log('getURL', getURL());
-
 	const loginHandler = async () => {
 		await supabase.auth.signInWithOAuth({
 			provider,
