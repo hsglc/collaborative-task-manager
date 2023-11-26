@@ -1,7 +1,9 @@
-import Link from 'next/link';
-import Messages from './messages';
+import { Divider, Button } from '@nextui-org/react';
 
+import Messages from './messages';
 import SocialloginButton from '@/components/SocialLoginButton';
+import PasswordInput from './passwordInput';
+import MailInput from './mailInput';
 
 export default async function Login() {
 	return (
@@ -10,37 +12,29 @@ export default async function Login() {
 				<SocialloginButton provider='google' />
 				<SocialloginButton provider='github' />
 			</div>
+			<div className='flex items-center justify-between'>
+				<Divider className='w-[210px]' />
+				<p>or sign up with email</p>
+				<Divider className='w-[210px]' />
+			</div>
 			<form
-				className=' flex flex-col w-full justify-center gap-1 text-foreground'
+				className=' flex flex-col w-full justify-center gap-3 text-foreground'
 				action='/auth/sign-in'
 				method='post'>
-				<label className='text-md' htmlFor='email'>
-					Email
-				</label>
-				<input
-					className='rounded-md px-4 py-2 bg-inherit border mb-6'
-					name='email'
-					placeholder='you@example.com'
-					required
-				/>
-				<label className='text-md' htmlFor='password'>
-					Password
-				</label>
-				<input
-					className='rounded-md px-4 py-2 bg-inherit border mb-6'
-					type='password'
-					name='password'
-					placeholder='••••••••'
-					required
-				/>
-				<button className='bg-green-700 rounded px-4 py-2 text-white mb-2'>
+				<MailInput />
+				<PasswordInput />
+
+				<Button color='primary' variant='solid' type='submit'>
 					Sign In
-				</button>
-				<button
+				</Button>
+
+				<Button
+					type='submit'
 					formAction='/auth/sign-up'
-					className='border border-gray-700 rounded px-4 py-2  mb-2'>
+					color='primary'
+					variant='bordered'>
 					Sign Up
-				</button>
+				</Button>
 				<Messages />
 			</form>
 		</div>

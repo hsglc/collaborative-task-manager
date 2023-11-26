@@ -48,7 +48,7 @@ export async function editTask(
 		description: formData.get('description'),
 		priority: formData.get('priority'),
 		status: formData.get('status'),
-		assignee: user?.id as string,
+		assignee: formData.get('assignee') || (user?.id as string),
 		created_by: created_by as string,
 	};
 

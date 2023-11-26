@@ -1,6 +1,7 @@
 import { fetchTasks } from '@/features/tasks/actions/fetchTasks';
 
-import { Sidebar, Tasks } from '@/components/containers';
+import { Tasks } from '@/features/tasks/components/Tasks';
+import { Sidebar } from '@/components/Sidebar';
 
 type Props = {
 	search: string;

@@ -28,7 +28,7 @@ type Props = {
 
 export const Sidebar = ({ numberOfTasks }: Props) => {
 	return (
-		<div className='col-span-3 bg-secondary h-full p-4 rounded-xl rounded-b-none ml-4 flex flex-col justify-between'>
+		<div className='col-span-3  h-full p-4 rounded-xl rounded-b-none ml-4 flex flex-col justify-between'>
 			<div className='space-y-12'>
 				<CreateTaskDialog />
 				<SidebarLinks numberOfTasks={numberOfTasks} />
@@ -38,7 +38,7 @@ export const Sidebar = ({ numberOfTasks }: Props) => {
 					<DropdownMenuTrigger asChild>
 						<Button
 							variant='outline'
-							className='bg-primary left-24 important-left'>
+							className='left-24 important-left'>
 							<Settings />
 						</Button>
 					</DropdownMenuTrigger>

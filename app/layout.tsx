@@ -1,4 +1,7 @@
 import './globals.css';
+
+import { Providers } from './providers';
+import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/shared/Header';
 
 export const metadata = {
@@ -13,9 +16,12 @@ export default async function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='text-white bg-primary'>
+			<body className='text-black bg-white'>
 				<Header />
-				<main>{children}</main>
+				<Providers>
+					<main>{children}</main>
+					<Toaster />
+				</Providers>
 			</body>
 		</html>
 	);

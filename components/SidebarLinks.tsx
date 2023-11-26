@@ -63,8 +63,8 @@ export const SidebarLinks = ({ numberOfTasks }: Props) => {
 						key={key}
 						onClick={() => push(`/dashboard?search=${search}`)}
 						className={cn(
-							'text-[#8D90B1] hover:bg-next hover:text-white w-full text-lg text-start p-2 transition-all relative flex items-center',
-							searchParams === search ? 'bg-next text-white' : ''
+							'text-black hover:bg-slate-100   w-full text-lg text-start p-2 transition-all relative flex items-center',
+							searchParams === search ? 'bg-slate-200' : ''
 						)}>
 						{name} ({sizeOfTasks})
 						{searchParams === search ? (

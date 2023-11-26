@@ -30,22 +30,14 @@ export async function fetchTasks(search: string) {
 	let { data: tasks } = await supabase
 		.from('tasks')
 		.select('*')
-		.eq('assignee', session?.user.id);
+		.order('created_at', { ascending: false })
+		.eq('created_by', session?.user.id);
 
 	const tasksWithHighPriority = tasks?.filter(
-		(task) => task.priority === 'high'
+		(task) => task.priority === 'High'
 	);
-	const completedTasks = tasks?.filter((task) => task.status === 'done');
-	const uncompletedTasks = tasks?.filter((task) => task.status !== 'done');
-
-	const filteredTasks =
-		search === 'all'
-			? tasks
-			: search === 'important'
-			? tasksWithHighPriority
-			: search === 'completed'
-			? completedTasks
-			: uncompletedTasks;
+	const completedTasks = tasks?.filter((task) => task.status === 'Done');
+	const uncompletedTasks = tasks?.filter((task) => task.status !== 'Done');
 	const assignedTasks = tasks?.filter(
 		(task) =>
 			task.assignee === session?.user.id &&
@@ -54,9 +46,22 @@ export async function fetchTasks(search: string) {
 
 	const sharedTasks = tasks?.filter(
 		(task) =>
-			task.assignee == session?.user.id &&
-			task.created_by !== session?.user.id
+			(task.assignee == session?.user.id &&
+				task.created_by !== session?.user.id) ||
+			(task.created_by == session?.user.id &&
+				task.assignee !== session?.user.id)
 	);
+
+	const filteredTasks =
+		search === 'all'
+			? tasks
+			: search === 'important'
+			? tasksWithHighPriority
+			: search === 'completed'
+			? completedTasks
+			: search === 'shared'
+			? sharedTasks
+			: uncompletedTasks;
 
 	return {
 		tasks: filteredTasks,

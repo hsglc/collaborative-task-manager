@@ -36,7 +36,7 @@ export const Header = async () => {
 		data: { user },
 	} = await supabase.auth.getUser();
 	return (
-		<header className='text-white py-21 bg-primary'>
+		<header className='text-black py-21 bg-white'>
 			<nav className='w-full flex justify-center'>
 				<div className='w-full max-w-7xl flex justify-between items-center p-3 text-sm'>
 					<div />
@@ -48,7 +48,7 @@ export const Header = async () => {
 										<PopoverTrigger asChild>
 											<Button
 												variant='outline'
-												className='bg-transparent group text-white hover:text-primary border-2 hover:border-secondaryYellow'>
+												className='bg-transparent group text-black hover:text-white border-2 hover:border-secondaryYellow'>
 												<svg
 													className=' w-5 h-5 group-hover:text-secondaryYellow '
 													fill='none'

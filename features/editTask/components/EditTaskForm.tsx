@@ -1,4 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import { editTask } from '@/features/editTask/actions/editTaskAction';
+import { fetchFriends } from '@/features/friendship/actions/fetchFriends';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,12 +19,22 @@ import {
 import { TaskActionButton } from '../../../components/TaskActionButton';
 
 import { Task } from '@/types/tasks';
+import { Friendship } from '@/types/friends';
 
 type Props = {
 	task: Task;
 };
 
 export function EditTaskForm({ task }: Props) {
+	const [friends, setFriends] = useState<Friendship[]>([]);
+
+	useEffect(() => {
+		(async () => {
+			const friends = await fetchFriends();
+			if (friends) setFriends(friends);
+		})();
+	}, []);
+
 	return (
 		<form
 			className='text-white text-lg space-y-4'
@@ -76,6 +91,26 @@ export function EditTaskForm({ task }: Props) {
 								Waiting Approval
 							</SelectItem>
 							<SelectItem value='Done'>Done</SelectItem>
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+			</Label>
+			<Label className='flex flex-col gap-2'>
+				Assignee
+				<Select name='assignee'>
+					<SelectTrigger className='w-full text-black'>
+						<SelectValue placeholder='Select the Assignee' />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							<SelectLabel>Assignee</SelectLabel>
+							{friends?.map((friend) => (
+								<SelectItem
+									key={friend.profiles.id}
+									value={friend.profiles.id.toString()}>
+									{friend.profiles.user_email}
+								</SelectItem>
+							))}
 						</SelectGroup>
 					</SelectContent>
 				</Select>

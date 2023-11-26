@@ -50,7 +50,7 @@ const SocialLoginButton = ({ provider }: Props) => {
 
 	return (
 		<div
-			className='bg-[#2e2e2e] hover:bg-[#343434] hover:cursor-pointer transition-all text-white font-semibold flex items-center justify-center gap-3 p-2 border border-[#505050] rounded-md'
+			className='bg-[#016FF0] hover:cursor-pointer transition-all text-white font-semibold flex items-center justify-center gap-3 p-2  rounded-md'
 			onClick={loginHandler}>
 			{providers[provider as keyof typeof providers].icon}
 			Continue with {providers[provider as keyof typeof providers].name}

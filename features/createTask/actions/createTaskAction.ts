@@ -44,10 +44,11 @@ export async function createTask(formData: FormData) {
 		description: formData.get('description'),
 		priority: formData.get('priority'),
 		status: formData.get('status'),
-		assignee: user?.id as string,
+		assignee: formData.get('assignee') || (user?.id as string),
 		created_by: user?.id as string,
 	};
 
+	console.log(createdTask);
 	const data = formSchema.parse(createdTask);
 
 	await supabase.from('tasks').insert([data]);

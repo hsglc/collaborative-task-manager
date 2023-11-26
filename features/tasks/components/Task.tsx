@@ -18,8 +18,8 @@ export const Task = ({ task }: Props) => {
 	const formattedDate = format(date, 'dd/MM/yyyy');
 
 	return (
-		<div className='rounded-md p-4 bg-upcoming shadow-sm space-y-3'>
-			<h4 className='text-2xl font-semibold text-white'>{task.name}</h4>
+		<div className='rounded-md p-4 text-black shadow-sm shadow-black space-y-3 '>
+			<h4 className='text-2xl font-semibold'>{task.name}</h4>
 			<div className='flex-center justify-between'>
 				<p>{task.description}</p>
 				<div className='flex-center gap-4'>
