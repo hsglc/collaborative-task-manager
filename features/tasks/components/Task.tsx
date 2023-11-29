@@ -2,10 +2,12 @@
 
 import { format, parseISO } from 'date-fns';
 import { Calendar } from 'lucide-react';
+import { useState } from 'react';
 
 import { TaskPriority } from '@/features/taskPriority/components/TaskPriority';
 import { DeleteTaskDialog } from '@/features/deleteTask/components/DeleteTaskDialog';
 import { EditTaskDialog } from '@/features/editTask/components/EditTaskDialog';
+import { Container } from '@/features/comments/components/Container';
 
 import { Task as NewTask } from '@/types/tasks';
 
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export const Task = ({ task }: Props) => {
+	const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 	const date = parseISO(task.created_at);
 	const formattedDate = format(date, 'dd/MM/yyyy');
 
@@ -27,6 +30,8 @@ export const Task = ({ task }: Props) => {
 
 					<EditTaskDialog task={task} />
 					<DeleteTaskDialog taskId={task.id} />
+
+					<Container taskId={task.id} />
 				</div>
 			</div>
 			<div className='flex-center gap-2'>
