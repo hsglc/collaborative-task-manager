@@ -38,7 +38,7 @@ export const Header = async () => {
 	return (
 		<header className='text-black py-21 bg-white'>
 			<nav className='w-full flex justify-center'>
-				<div className='w-full max-w-7xl flex justify-between items-center p-3 text-sm'>
+				<div className='w-full max-w-8xl flex justify-between items-center p-3 text-sm'>
 					<div />
 					<div>
 						{user ? (

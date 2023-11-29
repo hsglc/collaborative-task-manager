@@ -33,7 +33,7 @@ export const EditTaskDialog = ({ task }: Props) => {
 							<Pencil className='hover:scale-110 hover:cursor-pointer transition-all' />
 						</HoverCardTrigger>
 						<HoverCardContent
-							className='bg-secondary border-primary text-white text-center text-lg'
+							className='bg-black text-white text-center text-xl'
 							align='center'
 							sideOffset={20}>
 							Edit this task.
@@ -41,10 +41,12 @@ export const EditTaskDialog = ({ task }: Props) => {
 					</HoverCard>
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-[625px] bg-secondary'>
+			<DialogContent className='sm:max-w-[625px] bg-black text-white '>
 				<DialogHeader>
-					<DialogTitle>Edit this task</DialogTitle>
-					<DialogDescription>
+					<DialogTitle className='text-xl font-medium'>
+						Edit this task
+					</DialogTitle>
+					<DialogDescription className='text-lg font-medium'>
 						Edit this task to save it to your list.
 					</DialogDescription>
 				</DialogHeader>

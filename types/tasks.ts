@@ -4,6 +4,7 @@ export type Task = {
 	description: string;
 	created_at: string;
 	created_by: string;
+	assignee: string;
 	priority: Priority;
 	status: Status;
 };

@@ -20,6 +20,7 @@ import { TaskActionButton } from '../../../components/TaskActionButton';
 
 import { Task } from '@/types/tasks';
 import { Friendship } from '@/types/friends';
+import { DatePickerWithRange } from '@/components/DatePickerWithRange';
 
 type Props = {
 	task: Task;
@@ -97,7 +98,7 @@ export function EditTaskForm({ task }: Props) {
 			</Label>
 			<Label className='flex flex-col gap-2'>
 				Assignee
-				<Select name='assignee'>
+				<Select name='assignee' defaultValue={task.assignee}>
 					<SelectTrigger className='w-full text-black'>
 						<SelectValue placeholder='Select the Assignee' />
 					</SelectTrigger>
@@ -114,6 +115,11 @@ export function EditTaskForm({ task }: Props) {
 						</SelectGroup>
 					</SelectContent>
 				</Select>
+			</Label>
+
+			<Label className='flex flex-col gap-2'>
+				Selete Time Range
+				<DatePickerWithRange />
 			</Label>
 			<TaskActionButton type='edit' />
 		</form>

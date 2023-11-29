@@ -15,8 +15,8 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang='en'>
-			<body className='text-black bg-white'>
+		<html lang='en' className='flex items-center justify-center'>
+			<body className='text-black bg-white w-10/12 max-w-8xl '>
 				<Header />
 				<Providers>
 					<main>{children}</main>
