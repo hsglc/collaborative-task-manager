@@ -1,5 +1,5 @@
-import { Input } from '@nextui-org/react';
 import { MailIcon } from '@/icons/MailIcon';
+import { Input } from '@nextui-org/react';
 
 const MailInput = () => {
 	return (

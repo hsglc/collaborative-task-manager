@@ -1,7 +1,7 @@
 import { Divider, Button } from '@nextui-org/react';
 
 import Messages from './messages';
-import SocialloginButton from '@/components/SocialLoginButton';
+import SocialloginButton from '@/app/components/SocialLoginButton';
 import PasswordInput from './passwordInput';
 import MailInput from './mailInput';
 

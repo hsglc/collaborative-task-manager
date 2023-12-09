@@ -1,8 +1,8 @@
 import './globals.css';
 
 import { Providers } from './providers';
-import { Toaster } from '@/components/ui/toaster';
-import Header from '@/components/shared/Header';
+import { Toaster } from '@/app/components/ui/toaster';
+import Header from '@/app/components/shared/Header';
 
 export const metadata = {
 	title: 'CollabMate',
