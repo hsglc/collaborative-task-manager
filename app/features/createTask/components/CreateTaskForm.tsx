@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+//@ts-expect-error
+import { useFormState } from 'react-dom';
+
 import { createTask } from '@/app/features/createTask/actions/createTaskAction';
 import { fetchFriends } from '@/app/features/friendship/actions/fetchFriends';
 
@@ -20,8 +23,13 @@ import { FormActionButton } from '../../../components/shared/FormActionButton';
 
 import { Friendship } from '@/types/friends';
 
+const initialState = {
+	message: null,
+};
+
 export function CreateTaskForm() {
 	const [friends, setFriends] = useState<Friendship[]>([]);
+	const [state, formAction] = useFormState(createTask, initialState);
 
 	useEffect(() => {
 		(async () => {
@@ -31,7 +39,7 @@ export function CreateTaskForm() {
 	}, []);
 
 	return (
-		<form className='text-white text-lg space-y-4' action={createTask}>
+		<form className='text-white text-lg space-y-4' action={formAction}>
 			<Label className='flex flex-col gap-2'>
 				Name
 				<Input name='name' className='text-black' />
@@ -40,7 +48,6 @@ export function CreateTaskForm() {
 				Description
 				<Input name='description' className='text-black' />
 			</Label>
-
 			<Label className='flex flex-col gap-2'>
 				Priority
 				<Select name='priority'>
@@ -99,6 +106,7 @@ export function CreateTaskForm() {
 					</SelectContent>
 				</Select>
 			</Label>
+			{state?.message}
 			<FormActionButton text='Create' />
 		</form>
 	);

@@ -24,6 +24,8 @@ type Props = {
 };
 
 export const DeleteTaskDialog = ({ taskId }: Props) => {
+	const deleteTaskHandler = deleteTask.bind(null, taskId);
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
@@ -51,7 +53,7 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={() => deleteTask(taskId)}>
+					<AlertDialogAction onClick={deleteTaskHandler}>
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>

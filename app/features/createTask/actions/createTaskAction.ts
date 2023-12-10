@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { z } from 'zod';
 
-export async function createTask(formData: FormData) {
+export async function createTask(prevState: any, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
