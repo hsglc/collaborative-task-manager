@@ -27,7 +27,6 @@ export async function deleteTask(id: number) {
 
 	const { error } = await supabase.from("tasks").delete().eq("id", id);
 	if (error) {
-		console.error(error, id);
 		return false;
 	}
 	revalidatePath("/dashboard");
