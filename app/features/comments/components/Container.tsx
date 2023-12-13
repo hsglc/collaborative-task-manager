@@ -2,7 +2,7 @@
 
 import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
 	Button,
@@ -14,19 +14,18 @@ import {
 	useDisclosure,
 } from "@nextui-org/react";
 
-import { formatRelativeTime } from "@/app/lib/utils";
-
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "@/app/components/ui/avatar";
 import { Skeleton } from "@/app/components/ui/skeleton";
-import { AddCommentForm } from "./AddCommentForm";
 
 import { ScrollArea } from "@/app/components/ui/scroll-area";
 import { Separator } from "@/app/components/ui/separator";
+import { formatRelativeTime } from "@/app/lib/utils";
 import { Comment } from "@/types/comments";
+import { AddCommentForm } from "./AddCommentForm";
 
 type Props = {
 	taskId: number;
@@ -102,8 +101,8 @@ export function Container({ taskId }: Props) {
 								<ScrollArea className="h-96">
 									{comments.length > 0 ? (
 										comments.map((comment) => (
-											<>
-												<div className="flex flex-col gap-1" key={comment.id}>
+											<React.Fragment key={comment.id}>
+												<div className="flex flex-col gap-1">
 													<p>{comment.comment}</p>
 													<div className="flex gap-2 items-center">
 														<Avatar>
@@ -123,7 +122,7 @@ export function Container({ taskId }: Props) {
 													</div>
 												</div>
 												<Separator className="my-2" />
-											</>
+											</React.Fragment>
 										))
 									) : (
 										<p>There are no comments yet.</p>
