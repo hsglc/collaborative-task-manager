@@ -46,7 +46,7 @@ export function AddCommentForm() {
 			data: { user },
 		} = await supabase.auth.getUser();
 
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from("comments")
 			.insert([
 				{
