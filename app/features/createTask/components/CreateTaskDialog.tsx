@@ -21,7 +21,7 @@ export const CreateTaskDialog = () => {
 					New Task
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[625px] bg-secondary color-white">
+			<DialogContent className="sm:max-w-[625px] bg-black text-white">
 				<DialogHeader>
 					<DialogTitle>Create a new task</DialogTitle>
 					<DialogDescription>
