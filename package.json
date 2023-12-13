@@ -4,7 +4,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "pnpm dlx @biomejs/biome lint app/**/*"
+		"lint": "pnpm dlx @biomejs/biome lint app/**/*",
+		"format": "pnpm dlx @biomejs/biome format app/**/* --write",
+		"check": "pnpm dlx @biomejs/biome check --apply app/**/*"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.2",
