@@ -1,8 +1,8 @@
-'use server';
+"use server";
 
-import { CookieOptions, createServerClient } from '@supabase/ssr';
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
+import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export async function deleteTask(id: number) {
 	const cookieStore = cookies();
@@ -19,17 +19,17 @@ export async function deleteTask(id: number) {
 					cookieStore.set({ name, value, ...options });
 				},
 				remove(name: string, options: CookieOptions) {
-					cookieStore.set({ name, value: '', ...options });
+					cookieStore.set({ name, value: "", ...options });
 				},
 			},
-		}
+		},
 	);
 
-	const { error } = await supabase.from('tasks').delete().eq('id', id);
-	if (error)
-		return {
-			message: 'Failed to delete task',
-		};
-
-	revalidatePath('/dashboard');
+	const { error } = await supabase.from("tasks").delete().eq("id", id);
+	if (error) {
+		console.error(error, id);
+		return false;
+	}
+	revalidatePath("/dashboard");
+	return true;
 }
