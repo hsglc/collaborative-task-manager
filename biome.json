@@ -11,6 +11,16 @@
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "off"
+			},
+			"complexity": {
+				"noForEach": "off"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
 			}
 		}
 	}
