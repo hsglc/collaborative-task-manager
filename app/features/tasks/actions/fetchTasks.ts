@@ -1,7 +1,7 @@
-'use server';
+"use server";
 
-import { CookieOptions, createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export async function fetchTasks(search: string) {
 	const cookieStore = cookies();
@@ -18,30 +18,30 @@ export async function fetchTasks(search: string) {
 					cookieStore.set({ name, value, ...options });
 				},
 				remove(name: string, options: CookieOptions) {
-					cookieStore.set({ name, value: '', ...options });
+					cookieStore.set({ name, value: "", ...options });
 				},
 			},
-		}
+		},
 	);
 	const {
 		data: { session },
 	} = await supabase.auth.getSession();
 
 	const { data: tasks } = await supabase
-		.from('tasks')
-		.select('*')
-		.order('created_at', { ascending: false })
-		.eq('created_by', session?.user.id);
+		.from("tasks")
+		.select("*")
+		.order("created_at", { ascending: false })
+		.eq("created_by", session?.user.id);
 
 	const tasksWithHighPriority = tasks?.filter(
-		(task) => task.priority === 'High'
+		(task) => task.priority === "High",
 	);
-	const completedTasks = tasks?.filter((task) => task.status === 'Done');
-	const uncompletedTasks = tasks?.filter((task) => task.status !== 'Done');
+	const completedTasks = tasks?.filter((task) => task.status === "Done");
+	const uncompletedTasks = tasks?.filter((task) => task.status !== "Done");
 	const assignedTasks = tasks?.filter(
 		(task) =>
 			task.assignee === session?.user.id &&
-			task.created_by !== session?.user.id
+			task.created_by !== session?.user.id,
 	);
 
 	const sharedTasks = tasks?.filter(
@@ -49,19 +49,19 @@ export async function fetchTasks(search: string) {
 			(task.assignee === session?.user.id &&
 				task.created_by !== session?.user.id) ||
 			(task.created_by === session?.user.id &&
-				task.assignee !== session?.user.id)
+				task.assignee !== session?.user.id),
 	);
 
 	const filteredTasks =
-		search === 'all'
+		search === "all"
 			? tasks
-			: search === 'important'
-			? tasksWithHighPriority
-			: search === 'completed'
-			? completedTasks
-			: search === 'shared'
-			? sharedTasks
-			: uncompletedTasks;
+			: search === "important"
+			  ? tasksWithHighPriority
+			  : search === "completed"
+				  ? completedTasks
+				  : search === "shared"
+					  ? sharedTasks
+					  : uncompletedTasks;
 
 	return {
 		tasks: filteredTasks,

@@ -1,8 +1,8 @@
-'use server';
+"use server";
 
-import { Friendship } from '@/types/friends';
-import { CookieOptions, createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { Friendship } from "@/types/friends";
+import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export async function fetchFriends() {
 	const cookieStore = cookies();
@@ -19,10 +19,10 @@ export async function fetchFriends() {
 					cookieStore.set({ name, value, ...options });
 				},
 				remove(name: string, options: CookieOptions) {
-					cookieStore.set({ name, value: '', ...options });
+					cookieStore.set({ name, value: "", ...options });
 				},
 			},
-		}
+		},
 	);
 
 	const {
@@ -30,7 +30,7 @@ export async function fetchFriends() {
 	} = await supabase.auth.getUser();
 
 	const { data: friends } = await supabase
-		.from('friends')
+		.from("friends")
 		.select(
 			`
   user_id,
@@ -41,9 +41,9 @@ export async function fetchFriends() {
 	avatar_url,
 	full_name
   )
-`
+`,
 		)
-		.eq('user_id', user?.id)
+		.eq("user_id", user?.id)
 		.returns<Friendship[]>();
 
 	return friends;

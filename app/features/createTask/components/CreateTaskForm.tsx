@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 //@ts-expect-error
-import { useFormState } from 'react-dom';
+import { useFormState } from "react-dom";
 
-import { createTask } from '@/app/features/createTask/actions/createTaskAction';
-import { fetchFriends } from '@/app/features/friendship/actions/fetchFriends';
+import { createTask } from "@/app/features/createTask/actions/createTaskAction";
+import { fetchFriends } from "@/app/features/friendship/actions/fetchFriends";
 
-import { Input } from '@/app/components/ui/input';
-import { Label } from '@/app/components/ui/label';
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -18,10 +18,10 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from '@/app/components/ui/select';
-import { FormActionButton } from '../../../components/shared/FormActionButton';
+} from "@/app/components/ui/select";
+import { FormActionButton } from "../../../components/shared/FormActionButton";
 
-import { Friendship } from '@/types/friends';
+import { Friendship } from "@/types/friends";
 
 const initialState = {
 	message: null,
@@ -39,58 +39,54 @@ export function CreateTaskForm() {
 	}, []);
 
 	return (
-		<form className='text-white text-lg space-y-4' action={formAction}>
-			<Label className='flex flex-col gap-2'>
+		<form className="text-white text-lg space-y-4" action={formAction}>
+			<Label className="flex flex-col gap-2">
 				Name
-				<Input name='name' className='text-black' />
+				<Input name="name" className="text-black" />
 			</Label>
-			<Label className='flex flex-col gap-2'>
+			<Label className="flex flex-col gap-2">
 				Description
-				<Input name='description' className='text-black' />
+				<Input name="description" className="text-black" />
 			</Label>
-			<Label className='flex flex-col gap-2'>
+			<Label className="flex flex-col gap-2">
 				Priority
-				<Select name='priority'>
-					<SelectTrigger className='w-full text-black'>
-						<SelectValue placeholder='Select the priority' />
+				<Select name="priority">
+					<SelectTrigger className="w-full text-black">
+						<SelectValue placeholder="Select the priority" />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
 							<SelectLabel>Priority</SelectLabel>
-							<SelectItem value='Low'>Low</SelectItem>
-							<SelectItem value='Medium'>Medium</SelectItem>
-							<SelectItem value='High'>High</SelectItem>
+							<SelectItem value="Low">Low</SelectItem>
+							<SelectItem value="Medium">Medium</SelectItem>
+							<SelectItem value="High">High</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
 			</Label>
-			<Label className='flex flex-col gap-2'>
+			<Label className="flex flex-col gap-2">
 				Status
-				<Select name='status'>
-					<SelectTrigger className='w-full text-black'>
-						<SelectValue placeholder='Select the status' />
+				<Select name="status">
+					<SelectTrigger className="w-full text-black">
+						<SelectValue placeholder="Select the status" />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
 							<SelectLabel>Status</SelectLabel>
-							<SelectItem value='Backlog'>Backlog</SelectItem>
-							<SelectItem value='In Progress'>
-								In Progress
-							</SelectItem>
-							<SelectItem value='Waiting Approval'>
-								Waiting Approval
-							</SelectItem>
+							<SelectItem value="Backlog">Backlog</SelectItem>
+							<SelectItem value="In Progress">In Progress</SelectItem>
+							<SelectItem value="Waiting Approval">Waiting Approval</SelectItem>
 
-							<SelectItem value='Done'>Done</SelectItem>
+							<SelectItem value="Done">Done</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
 			</Label>
-			<Label className='flex flex-col gap-2'>
+			<Label className="flex flex-col gap-2">
 				Assignee
-				<Select name='assignee'>
-					<SelectTrigger className='w-full text-black'>
-						<SelectValue placeholder='Select the Assignee' />
+				<Select name="assignee">
+					<SelectTrigger className="w-full text-black">
+						<SelectValue placeholder="Select the Assignee" />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
@@ -98,7 +94,8 @@ export function CreateTaskForm() {
 							{friends?.map((friend) => (
 								<SelectItem
 									key={friend.profiles.id}
-									value={friend.profiles.id.toString()}>
+									value={friend.profiles.id.toString()}
+								>
 									{friend.profiles.user_email}
 								</SelectItem>
 							))}
@@ -107,7 +104,7 @@ export function CreateTaskForm() {
 				</Select>
 			</Label>
 			{state?.message}
-			<FormActionButton text='Create' />
+			<FormActionButton text="Create" />
 		</form>
 	);
 }

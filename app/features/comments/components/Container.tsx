@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import { createBrowserClient } from '@supabase/ssr';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { createBrowserClient } from "@supabase/ssr";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import {
-	Modal,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
 	Button,
+	Modal,
+	ModalBody,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
 	useDisclosure,
-} from '@nextui-org/react';
+} from "@nextui-org/react";
 
-import { formatRelativeTime } from '@/app/lib/utils';
+import { formatRelativeTime } from "@/app/lib/utils";
 
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from '@/app/components/ui/avatar';
-import { Skeleton } from '@/app/components/ui/skeleton';
-import { AddCommentForm } from './AddCommentForm';
+} from "@/app/components/ui/avatar";
+import { Skeleton } from "@/app/components/ui/skeleton";
+import { AddCommentForm } from "./AddCommentForm";
 
-import { Comment } from '@/types/comments';
-import { ScrollArea } from '@/app/components/ui/scroll-area';
-import { Separator } from '@/app/components/ui/separator';
+import { ScrollArea } from "@/app/components/ui/scroll-area";
+import { Separator } from "@/app/components/ui/separator";
+import { Comment } from "@/types/comments";
 
 type Props = {
 	taskId: number;
@@ -40,7 +40,7 @@ export function Container({ taskId }: Props) {
 
 	const supabase = createBrowserClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 	);
 
 	const fetchComments = async () => {
@@ -48,7 +48,7 @@ export function Container({ taskId }: Props) {
 
 		onOpen();
 		const { data: comments, error } = await supabase
-			.from('comments')
+			.from("comments")
 			.select(
 				`
                 id,
@@ -62,9 +62,9 @@ export function Container({ taskId }: Props) {
                     full_name
                   )
             
-            `
+            `,
 			)
-			.eq('task_id', taskId)
+			.eq("task_id", taskId)
 			.returns<Comment[]>();
 
 		if (error) console.log(error);
@@ -73,13 +73,13 @@ export function Container({ taskId }: Props) {
 
 	useEffect(() => {
 		const channels = supabase
-			.channel('custom-insert-channel')
+			.channel("custom-insert-channel")
 			.on(
-				'postgres_changes',
-				{ event: 'INSERT', schema: 'public', table: 'comments' },
+				"postgres_changes",
+				{ event: "INSERT", schema: "public", table: "comments" },
 				(payload) => {
 					fetchComments();
-				}
+				},
 			)
 			.subscribe();
 
@@ -90,57 +90,39 @@ export function Container({ taskId }: Props) {
 
 	return (
 		<>
-			<Button onPress={fetchComments}>
-				Comments ({comments.length})
-			</Button>
+			<Button onPress={fetchComments}>Comments ({comments.length})</Button>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 				<ModalContent>
 					{(onClose) => (
 						<>
-							<ModalHeader className='flex flex-col gap-1'>
+							<ModalHeader className="flex flex-col gap-1">
 								Comments
 							</ModalHeader>
 							<ModalBody>
-								<ScrollArea className='h-96'>
+								<ScrollArea className="h-96">
 									{comments.length > 0 ? (
 										comments.map((comment) => (
 											<>
-												<div
-													className='flex flex-col gap-1'
-													key={comment.id}>
+												<div className="flex flex-col gap-1" key={comment.id}>
 													<p>{comment.comment}</p>
-													<div className='flex gap-2 items-center'>
+													<div className="flex gap-2 items-center">
 														<Avatar>
-															<AvatarImage
-																src={
-																	comment
-																		.profiles
-																		.avatar_url
-																}
-															/>
+															<AvatarImage src={comment.profiles.avatar_url} />
 															<AvatarFallback>
-																<Skeleton className='w-[40px] h-[20px] rounded-full' />
+																<Skeleton className="w-[40px] h-[20px] rounded-full" />
 															</AvatarFallback>
 														</Avatar>
-														<div className='flex flex-col text-sm'>
-															<p>
-																{
-																	comment
-																		.profiles
-																		.full_name
-																}
-															</p>
-															<p className='text-gray-400'>
+														<div className="flex flex-col text-sm">
+															<p>{comment.profiles.full_name}</p>
+															<p className="text-gray-400">
 																{formatRelativeTime(
-																	new Date(
-																		comment.created_at
-																	)
+																	new Date(comment.created_at),
 																)}
 															</p>
 														</div>
 													</div>
 												</div>
-												<Separator className='my-2' />
+												<Separator className="my-2" />
 											</>
 										))
 									) : (
@@ -150,10 +132,7 @@ export function Container({ taskId }: Props) {
 								<AddCommentForm />
 							</ModalBody>
 							<ModalFooter>
-								<Button
-									color='danger'
-									variant='light'
-									onPress={onClose}>
+								<Button color="danger" variant="light" onPress={onClose}>
 									Close
 								</Button>
 							</ModalFooter>

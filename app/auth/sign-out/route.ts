@@ -1,8 +1,8 @@
-import { CookieOptions, createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
 	const requestUrl = new URL(request.url);
@@ -20,10 +20,10 @@ export async function POST(request: Request) {
 					cookieStore.set({ name, value, ...options });
 				},
 				remove(name: string, options: CookieOptions) {
-					cookieStore.set({ name, value: '', ...options });
+					cookieStore.set({ name, value: "", ...options });
 				},
 			},
-		}
+		},
 	);
 
 	await supabase.auth.signOut();

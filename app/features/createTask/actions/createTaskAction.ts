@@ -1,9 +1,9 @@
-'use server';
+"use server";
 
-import { CookieOptions, createServerClient } from '@supabase/ssr';
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-import { z } from 'zod';
+import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { z } from "zod";
 
 export async function createTask(prevState: any, formData: FormData) {
 	const cookieStore = cookies();
@@ -20,10 +20,10 @@ export async function createTask(prevState: any, formData: FormData) {
 					cookieStore.set({ name, value, ...options });
 				},
 				remove(name: string, options: CookieOptions) {
-					cookieStore.set({ name, value: '', ...options });
+					cookieStore.set({ name, value: "", ...options });
 				},
 			},
-		}
+		},
 	);
 
 	const {
@@ -40,21 +40,21 @@ export async function createTask(prevState: any, formData: FormData) {
 	});
 
 	const createdTask = {
-		name: formData.get('name'),
-		description: formData.get('description'),
-		priority: formData.get('priority'),
-		status: formData.get('status'),
-		assignee: formData.get('assignee') || (user?.id as string),
+		name: formData.get("name"),
+		description: formData.get("description"),
+		priority: formData.get("priority"),
+		status: formData.get("status"),
+		assignee: formData.get("assignee") || (user?.id as string),
 		created_by: user?.id as string,
 	};
 
 	const data = formSchema.parse(createdTask);
 
-	const { error } = await supabase.from('tasks').insert([data]);
+	const { error } = await supabase.from("tasks").insert([data]);
 	if (error) {
 		return {
-			message: 'Failed to create task',
+			message: "Failed to create task",
 		};
 	}
-	revalidatePath('/dashboard');
+	revalidatePath("/dashboard");
 }

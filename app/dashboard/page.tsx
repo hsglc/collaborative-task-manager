@@ -1,8 +1,8 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { Dashboard } from '@/app/components/Dashboard';
+import { Dashboard } from "@/app/components/Dashboard";
 
 export default async function DashboardIndex({
 	searchParams,
@@ -20,15 +20,15 @@ export default async function DashboardIndex({
 					return cookieStore.get(name)?.value;
 				},
 			},
-		}
+		},
 	);
 
 	const {
 		data: { session },
 	} = await supabase.auth.getSession();
 	if (!session) {
-		redirect('/login');
+		redirect("/login");
 	}
 
-	return <Dashboard search={searchParams?.search ?? 'all'} />;
+	return <Dashboard search={searchParams?.search ?? "all"} />;
 }

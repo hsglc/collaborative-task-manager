@@ -1,10 +1,10 @@
-'use client';
-import { useState } from 'react';
-import { Input } from '@nextui-org/react';
-import { KeyRound } from 'lucide-react';
+"use client";
+import { Input } from "@nextui-org/react";
+import { KeyRound } from "lucide-react";
+import { useState } from "react";
 
-import { EyeFilledIcon } from '@/icons/EyeFilledIcon';
-import { EyeSlashFilledIcon } from '@/icons/EyeSlashFilledIcon';
+import { EyeFilledIcon } from "@/icons/EyeFilledIcon";
+import { EyeSlashFilledIcon } from "@/icons/EyeSlashFilledIcon";
 
 const PasswordInput = () => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -12,28 +12,29 @@ const PasswordInput = () => {
 	const toggleVisibility = () => setIsVisible(!isVisible);
 	return (
 		<Input
-			name='password'
-			label='Password'
-			placeholder='Enter your password'
-			labelPlacement='outside'
+			name="password"
+			label="Password"
+			placeholder="Enter your password"
+			labelPlacement="outside"
 			required
 			startContent={
-				<KeyRound className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+				<KeyRound className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
 			}
 			endContent={
 				<button
-					className='focus:outline-none'
-					type='button'
-					onClick={toggleVisibility}>
+					className="focus:outline-none"
+					type="button"
+					onClick={toggleVisibility}
+				>
 					{isVisible ? (
-						<EyeSlashFilledIcon className='text-2xl text-default-400 pointer-events-none' />
+						<EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
 					) : (
-						<EyeFilledIcon className='text-2xl text-default-400 pointer-events-none' />
+						<EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
 					)}
 				</button>
 			}
-			type={isVisible ? 'text' : 'password'}
-			className='w-full'
+			type={isVisible ? "text" : "password"}
+			className="w-full"
 		/>
 	);
 };

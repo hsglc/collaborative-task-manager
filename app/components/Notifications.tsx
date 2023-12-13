@@ -3,28 +3,28 @@
  * @see https://v0.dev/t/Ge7cNuDER53
  */
 
-'use client';
+"use client";
 
-import { createBrowserClient } from '@supabase/ssr';
-import { useEffect, useState } from 'react';
+import { createBrowserClient } from "@supabase/ssr";
+import { useEffect, useState } from "react";
 
 import {
-	CardTitle,
-	CardHeader,
-	CardContent,
 	Card,
-} from '@/app/components/ui/card';
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/app/components/ui/card";
 import {
-	TabsTrigger,
-	TabsList,
-	TabsContent,
 	Tabs,
-} from '@/app/components/ui/tabs';
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from "@/app/components/ui/tabs";
 
 interface Notifications {
 	commit_timestamp: string;
 	errors: any;
-	eventType: 'DELETE' | 'INSERT' | 'UPDATE';
+	eventType: "DELETE" | "INSERT" | "UPDATE";
 	new: Notification;
 	old: Old;
 	schema: string;
@@ -37,10 +37,10 @@ interface Notification {
 	is_read: boolean;
 	user: string;
 	type:
-		| 'friendship'
-		| 'new_task_assigned'
-		| 'new_comment_added_to_task'
-		| 'task_status_changed';
+		| "friendship"
+		| "new_task_assigned"
+		| "new_comment_added_to_task"
+		| "task_status_changed";
 }
 
 interface Old {
@@ -50,12 +50,12 @@ interface Old {
 interface User {
 	email: string;
 }
-import { Button } from '@/app/components/ui/button';
+import { Button } from "@/app/components/ui/button";
 
 export function Notifications() {
 	const supabase = createBrowserClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 	);
 	const [user, setUser] = useState<User>({} as User);
 	const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -65,9 +65,9 @@ export function Notifications() {
 			data: { user },
 		} = await supabase.auth.getUser();
 		const { data: notifications } = await supabase
-			.from('notifications')
-			.select('*')
-			.eq('user', user?.id);
+			.from("notifications")
+			.select("*")
+			.eq("user", user?.id);
 
 		setNotifications(notifications as Notification[]);
 		setUser(user as User);
@@ -79,13 +79,13 @@ export function Notifications() {
 
 	useEffect(() => {
 		const channel = supabase
-			.channel('notifications')
+			.channel("notifications")
 			.on(
-				'postgres_changes',
+				"postgres_changes",
 				{
-					schema: 'public',
-					table: 'notifications',
-					event: '*',
+					schema: "public",
+					table: "notifications",
+					event: "*",
 				},
 				(payload) => {
 					const notification = payload as Notifications;
@@ -93,22 +93,20 @@ export function Notifications() {
 						return;
 					}
 
-					if (notification.eventType === 'INSERT') {
+					if (notification.eventType === "INSERT") {
 						setNotifications([...notifications, notification.new]);
-					} else if (notification.eventType === 'UPDATE') {
+					} else if (notification.eventType === "UPDATE") {
 						const updatedNotifications = notifications.map(
 							(oldNotification) => {
-								if (
-									oldNotification.id === notification.new.id
-								) {
+								if (oldNotification.id === notification.new.id) {
 									return notification.new;
 								}
 								return oldNotification;
-							}
+							},
 						);
 						setNotifications(updatedNotifications);
 					}
-				}
+				},
 			)
 			.subscribe();
 		return () => {
@@ -117,105 +115,99 @@ export function Notifications() {
 	}, [user, notifications]);
 
 	return (
-		<Card className='w-full max-w-xs'>
+		<Card className="w-full max-w-xs">
 			<CardHeader>
 				<CardTitle>Notifications</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Tabs
-					className='flex flex-col gap-2 items-start'
-					defaultValue='unread'>
-					<TabsList className='w-full justify-start'>
-						<TabsTrigger value='unread'>Unread</TabsTrigger>
-						<TabsTrigger value='read'>Read</TabsTrigger>
+				<Tabs className="flex flex-col gap-2 items-start" defaultValue="unread">
+					<TabsList className="w-full justify-start">
+						<TabsTrigger value="unread">Unread</TabsTrigger>
+						<TabsTrigger value="read">Read</TabsTrigger>
 					</TabsList>
-					<TabsContent className='p-1' value='unread'>
+					<TabsContent className="p-1" value="unread">
 						{notifications.length > 0
 							? notifications
 									.filter((nf) => nf.is_read === false)
 									.map((nf) => (
-										<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
-											<span className='flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500' />
-											<div className='grid gap-1'>
-												<p className='text-sm font-medium'>
-													New friend request from{' '}
-													{/* {nf.receiver_email} . */}
+										<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+											<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+											<div className="grid gap-1">
+												<p className="text-sm font-medium">
+													New friend request from {/* {nf.receiver_email} . */}
 												</p>
-												<div className='mt-2'>
-													<Button
-														size='sm'
-														variant='outline'>
+												<div className="mt-2">
+													<Button size="sm" variant="outline">
 														Accept
 													</Button>
 													<Button
-														className='ml-2'
-														size='sm'
-														variant='destructive'>
+														className="ml-2"
+														size="sm"
+														variant="destructive"
+													>
 														Decline
 													</Button>
 												</div>
-												<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+												<p className="text-sm text-zinc-500 dark:text-zinc-400">
 													5 min ago
 												</p>
 											</div>
 										</div>
 									))
 							: null}
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
-							<span className='flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500' />
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
-									New task assigned to you!
-								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+							<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">New task assigned to you!</p>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									1 min ago
 								</p>
 							</div>
 						</div>
 					</TabsContent>
-					<TabsContent className='p-1' value='read'>
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
+					<TabsContent className="p-1" value="read">
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
 							<svg
-								className=' w-4 h-4 translate-y-1'
-								fill='none'
-								height='24'
-								stroke='currentColor'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth='2'
-								viewBox='0 0 24 24'
-								width='24'
-								xmlns='http://www.w3.org/2000/svg'>
-								<polyline points='20 6 9 17 4 12' />
+								className=" w-4 h-4 translate-y-1"
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								viewBox="0 0 24 24"
+								width="24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<polyline points="20 6 9 17 4 12" />
 							</svg>
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">
 									Friend request accepted by Jane Doe.
 								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									2 hours ago
 								</p>
 							</div>
 						</div>
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
 							<svg
-								className=' w-4 h-4 translate-y-1'
-								fill='none'
-								height='24'
-								stroke='currentColor'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth='2'
-								viewBox='0 0 24 24'
-								width='24'
-								xmlns='http://www.w3.org/2000/svg'>
-								<polyline points='20 6 9 17 4 12' />
+								className=" w-4 h-4 translate-y-1"
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								viewBox="0 0 24 24"
+								width="24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<polyline points="20 6 9 17 4 12" />
 							</svg>
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
-									You completed a task!
-								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">You completed a task!</p>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									3 days ago
 								</p>
 							</div>

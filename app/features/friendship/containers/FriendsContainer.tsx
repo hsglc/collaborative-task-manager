@@ -3,15 +3,15 @@
  * @see https://v0.dev/t/Uhl4VMZMCDq
  */
 
-import { AddNewFriendsCard } from '../components/AddNewFriendsCard';
-import { FriendsList } from '../components/FriendsList';
+import { AddNewFriendsCard } from "../components/AddNewFriendsCard";
+import { FriendsList } from "../components/FriendsList";
 
 export function FriendsContainer() {
 	return (
-		<div className='space-y-8 flex  justify-center'>
-			<div className='space-y-2'>
-				<h2 className='text-3xl font-bold'>Friendship</h2>
-				<p className='text-zinc-500 dark:text-zinc-400'>
+		<div className="space-y-8 flex  justify-center">
+			<div className="space-y-2">
+				<h2 className="text-3xl font-bold">Friendship</h2>
+				<p className="text-zinc-500 dark:text-zinc-400">
 					Send a friend request or check your existing friends.
 				</p>
 				<AddNewFriendsCard />
