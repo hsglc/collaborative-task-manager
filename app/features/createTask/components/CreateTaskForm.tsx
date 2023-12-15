@@ -104,7 +104,7 @@ export function CreateTaskForm() {
 				</Select>
 			</Label>
 			{state?.message}
-			<FormActionButton text="Create" />
+			<FormActionButton>Create</FormActionButton>
 		</form>
 	);
 }

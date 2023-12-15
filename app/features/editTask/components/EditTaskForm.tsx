@@ -123,7 +123,7 @@ export function EditTaskForm({ task }: Props) {
 				Selete Time Range
 				<DatePickerWithRange />
 			</Label>
-			<FormActionButton text="Edit" />
+			<FormActionButton>Edit</FormActionButton>
 			{state?.message}
 		</form>
 	);

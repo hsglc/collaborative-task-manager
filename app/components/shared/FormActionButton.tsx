@@ -6,10 +6,10 @@ import { useFormStatus } from "react-dom";
 import { Button } from "@/app/components/ui/button";
 
 type Props = {
-	text: string;
+	children: string;
 };
 
-export function FormActionButton({ text }: Props) {
+export function FormActionButton({ children }: Props) {
 	const { pending } = useFormStatus();
 
 	return (
@@ -18,7 +18,7 @@ export function FormActionButton({ text }: Props) {
 			type="submit"
 			aria-disabled={pending}
 		>
-			{pending ? "Processing..." : text}
+			{pending ? "Processing..." : children}
 			{pending ? (
 				<div className="flex justify-center items-center h-screen">
 					<div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" />
