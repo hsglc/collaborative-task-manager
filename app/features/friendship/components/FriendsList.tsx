@@ -31,7 +31,7 @@ export const FriendsList = async () => {
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
 						{friends.map((friend) => (
-							<div className="flex items-center gap-3">
+							<div key={friend.friend_id} className="flex items-center gap-3">
 								<Avatar className="h-9 w-9">
 									<AvatarImage
 										alt={friend.profiles.full_name}

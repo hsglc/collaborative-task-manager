@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
-export async function addFriends(formData: FormData) {
+export async function addFriends(prevState: any, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -41,7 +41,13 @@ export async function addFriends(formData: FormData) {
 		.select("id")
 		.eq("user_email", validatedEmail);
 
-	if (!friend) return;
+	if (friend?.length === 0 || !friend) {
+		return {
+			title: "Error",
+			message: "User not found",
+			isSuccess: false,
+		};
+	}
 
 	const { error } = await supabase
 		.from("friends")
@@ -49,8 +55,16 @@ export async function addFriends(formData: FormData) {
 		.select();
 
 	if (error) {
-		console.error(error);
-		return;
+		return {
+			title: "Error",
+			message: "Failed to add friend",
+			isSuccess: false,
+		};
 	}
 	revalidatePath("/friends");
+	return {
+		title: "Success",
+		message: "Friend added",
+		isSuccess: true,
+	};
 }
