@@ -130,7 +130,10 @@ export function Notifications() {
 							? notifications
 									.filter((nf) => nf.is_read === false)
 									.map((nf) => (
-										<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+										<div
+											key={nf.id}
+											className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+										>
 											<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
 											<div className="grid gap-1">
 												<p className="text-sm font-medium">
