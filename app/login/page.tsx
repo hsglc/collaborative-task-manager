@@ -1,3 +1,4 @@
+"use client";
 import { Button, Divider } from "@nextui-org/react";
 
 import SocialloginButton from "@/app/components/SocialLoginButton";
