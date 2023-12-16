@@ -34,6 +34,7 @@ export async function fetchFriends() {
 		.select(
 			`
   user_id,
+  status,
   profiles!friends_friend_id_fkey (
 	id,
 	user_email,
