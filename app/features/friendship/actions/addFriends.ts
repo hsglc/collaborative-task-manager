@@ -57,14 +57,14 @@ export async function addFriends(prevState: any, formData: FormData) {
 	if (error) {
 		return {
 			title: "Error",
-			message: "Failed to add friend",
+			message: "Failed to send invitation",
 			isSuccess: false,
 		};
 	}
 	revalidatePath("/friends");
 	return {
 		title: "Success",
-		message: "Friend added",
+		message: "Invitation sent",
 		isSuccess: true,
 	};
 }
