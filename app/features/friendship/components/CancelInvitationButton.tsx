@@ -16,7 +16,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { revalidatePath } from "next/cache";
 import { cancelInvitation } from "../actions/cancelInvitation";
 
 type Props = {

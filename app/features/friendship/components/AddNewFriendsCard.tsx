@@ -32,9 +32,8 @@ const initialState = {
 export const AddNewFriendsCard = () => {
 	const [state, formAction] = useFormState(addFriends, initialState);
 
-	console.log("state :", state);
 	return (
-		<Card className="w-full max-w-lg">
+		<Card>
 			<form action={formAction}>
 				<CardHeader className="flex flex-row items-start">
 					<div className="space-y-1.5">
@@ -56,36 +55,42 @@ export const AddNewFriendsCard = () => {
 						/>
 					</div>
 				</CardContent>
-				<CardFooter className="space-x-8">
-					<Button type="button" variant="ghost" className="bg-black text-white">
-						Cancel
-					</Button>
-					<FormActionButton>Send Invititation</FormActionButton>
-				</CardFooter>
-
-				<AnimatePresence>
-					{state?.message ? (
-						<motion.div
-							initial={{ y: -50, opacity: 0 }}
-							animate={{ y: 0, opacity: 1 }}
-							exit={{ y: -50, opacity: 0 }}
+				<CardFooter className="flex flex-col gap-4">
+					<div className="grid grid-cols-2 gap-6 w-full">
+						<Button
+							type="button"
+							variant="ghost"
+							className="bg-black text-white"
 						>
-							<Alert variant={state.isSuccess ? "success" : "destructive"}>
-								{state.isSuccess ? (
-									<PersonIcon className="h-4 w-4" />
-								) : (
-									<ExclamationTriangleIcon className="h-4 w-4" />
-								)}
-								<AlertTitle>{state.title}</AlertTitle>
-								<AlertDescription>
-									{state.message}
-									<br />
-									{getCurrentFormattedDate()}
-								</AlertDescription>
-							</Alert>
-						</motion.div>
-					) : null}
-				</AnimatePresence>
+							Cancel
+						</Button>
+						<FormActionButton>Send Invititation</FormActionButton>
+					</div>
+					<AnimatePresence>
+						{state?.message ? (
+							<motion.div
+								className="w-full"
+								initial={{ y: -50, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								exit={{ y: -50, opacity: 0 }}
+							>
+								<Alert variant={state.isSuccess ? "success" : "destructive"}>
+									{state.isSuccess ? (
+										<PersonIcon className="h-4 w-4" />
+									) : (
+										<ExclamationTriangleIcon className="h-4 w-4" />
+									)}
+									<AlertTitle>{state.title}</AlertTitle>
+									<AlertDescription>
+										{state.message}
+										<br />
+										{getCurrentFormattedDate()}
+									</AlertDescription>
+								</Alert>
+							</motion.div>
+						) : null}
+					</AnimatePresence>
+				</CardFooter>
 			</form>
 		</Card>
 	);
