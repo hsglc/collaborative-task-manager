@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 
 export async function editTask(
+	prevState: any,
 	formData: FormData,
 	id: number,
 	created_by: string,
