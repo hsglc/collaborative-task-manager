@@ -2,12 +2,15 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { Dashboard } from "@/app/components/Dashboard";
+import { fetchTasks } from "@/app/features/tasks/actions/fetchTasks";
+
+import { Sidebar } from "@/app/components/Sidebar";
+import { Tasks } from "@/app/features/tasks/components/Tasks";
 
 export default async function DashboardIndex({
 	searchParams,
 }: {
-	searchParams?: { [key: string]: string };
+	searchParams: { [key: string]: string };
 }) {
 	const cookieStore = cookies();
 
@@ -30,5 +33,14 @@ export default async function DashboardIndex({
 		redirect("/login");
 	}
 
-	return <Dashboard search={searchParams?.search ?? "all"} />;
+	const { tasks, numberOfTasks } = await fetchTasks(
+		searchParams.search ?? "all",
+	);
+
+	return (
+		<div className="grid grid-cols-9 h-screen max-h-[calc(100vh-64px)]">
+			<Sidebar numberOfTasks={numberOfTasks} />
+			<Tasks tasks={tasks ?? []} />
+		</div>
+	);
 }

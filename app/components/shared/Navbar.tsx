@@ -129,7 +129,6 @@ export function NavigationBar({ user }: { user: any }) {
 										<Skeleton className="w-[100px] h-[20px] rounded-full" />
 									</AvatarFallback>
 								</Avatar>
-								Hey, {user.user_metadata.full_name}!
 							</div>
 						</NavbarItem>
 					</NavbarContent>

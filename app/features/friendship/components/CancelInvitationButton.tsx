@@ -1,8 +1,6 @@
 "use client";
 import { Button } from "@/app/components/ui/button";
 
-import { createBrowserClient } from "@supabase/ssr";
-
 import { ToastAction } from "@/app/components/ui/toast";
 import { useToast } from "@/app/components/ui/use-toast";
 import { getCurrentFormattedDate } from "@/app/lib/utils";
@@ -23,11 +21,6 @@ type Props = {
 };
 
 export const CancelInvitationButton = ({ id }: Props) => {
-	const supabase = createBrowserClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-	);
-
 	const { toast } = useToast();
 
 	const cancelInvitationHandler = async () => {

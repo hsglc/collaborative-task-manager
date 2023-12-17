@@ -3,15 +3,12 @@
  * @see https://v0.dev/t/Uhl4VMZMCDq
  */
 
-// import { AddNewFriendsCard } from '../components/AddNewFriendsCard';
-// import { FriendsList } from '../components/FriendsList';
-
 import { AddNewFriendsCard } from "@/app/features/friendship/components/AddNewFriendsCard";
 import { FriendsList } from "@/app/features/friendship/components/FriendsList";
 
 export default async function Friends() {
 	return (
-		<div className="space-y-8 flex  justify-center">
+		<div className="flex h-screen max-h-[calc(100vh-64px)] px-8">
 			<div className="space-y-2 w-[512px] lg:w-[1024px]">
 				<h2 className="text-3xl font-bold">Friendship</h2>
 				<p className="text-zinc-500 dark:text-zinc-400">
