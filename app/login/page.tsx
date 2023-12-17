@@ -1,5 +1,5 @@
-"use client";
-import { Button, Divider } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import { Divider } from "@nextui-org/divider";
 
 import SocialloginButton from "@/app/components/SocialLoginButton";
 import MailInput from "./mailInput";
