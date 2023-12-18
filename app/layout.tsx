@@ -5,8 +5,8 @@ import { Toaster } from '@/app/components/ui/toaster';
 import Header from '@/app/components/shared/Header';
 
 export const metadata = {
-	title: 'CollabMate',
-	description: 'CollabMate is a task management app for teams.',
+	title: 'CollaborabMate',
+	description: 'CollaboraMate is a task management app for teams.',
 };
 
 export default async function RootLayout({
