@@ -1,4 +1,4 @@
-name: Github Actions Preview
+name: Vercel Preview Deployment
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  biomejs:
-    name: 'Biome.js'
+  deployment:
+    name: 'Lint, Format, and Build'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,3 +30,6 @@ jobs:
 
       - name: Run Biome.js
         run: pnpm run check
+
+      - name: Build
+        run: pnpm run build
