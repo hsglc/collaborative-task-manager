@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 
 import SocialloginButton from "@/app/components/SocialLoginButton";
+import { Suspense } from "react";
 import MailInput from "./mailInput";
 import Messages from "./messages";
 import PasswordInput from "./passwordInput";
@@ -38,7 +39,9 @@ export default async function Login() {
 				>
 					Sign Up
 				</Button>
-				<Messages />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Messages />
+				</Suspense>
 			</form>
 		</div>
 	);
