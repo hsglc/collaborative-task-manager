@@ -5,7 +5,7 @@ import { Toaster } from '@/app/components/ui/toaster';
 import Header from '@/app/components/shared/Header';
 
 export const metadata = {
-	title: 'CollaborabMate',
+	title: 'CollaboraMate',
 	description: 'CollaboraMate is a task management app for teams.',
 };
 
