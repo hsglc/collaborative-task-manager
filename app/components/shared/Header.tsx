@@ -3,11 +3,6 @@ import { cookies } from "next/headers";
 
 import { NavigationBar } from "./Navbar";
 
-export const metadata = {
-	title: "CollaboraMate",
-	description: "Task management for teams and individuals.",
-};
-
 export const Header = async () => {
 	const cookieStore = cookies();
 
@@ -26,11 +21,7 @@ export const Header = async () => {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser();
-	return (
-		<header className="text-black py-21 bg-white">
-			<NavigationBar user={user} />
-		</header>
-	);
+	return <NavigationBar user={user} />;
 };
 
 export default Header;
