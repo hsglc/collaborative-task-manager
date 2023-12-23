@@ -6,7 +6,8 @@
 		"start": "next start",
 		"lint": "pnpm dlx @biomejs/biome lint app/**/*",
 		"format": "pnpm dlx @biomejs/biome format app/**/* --write",
-		"check": "pnpm dlx @biomejs/biome check --apply app/**/*"
+		"check": "pnpm dlx @biomejs/biome check --apply app/**/*",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.2",
@@ -56,6 +57,7 @@
 		"@types/node": "20.3.1",
 		"@types/react": "18.2.12",
 		"@types/react-dom": "18.2.7",
-		"encoding": "^0.1.13"
+		"encoding": "^0.1.13",
+		"husky": "^8.0.0"
 	}
 }
