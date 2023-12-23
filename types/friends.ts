@@ -1,6 +1,5 @@
 type UserProfile = {
 	id: string;
-	username: string | null;
 	avatar_url: string;
 	full_name: string;
 	user_email: string;
