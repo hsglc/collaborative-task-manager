@@ -99,7 +99,7 @@ export const FriendsList = () => {
 
 	return (
 		<div className="flex flex-col gap-4 xl:flex-row">
-			<Card className="w-full max-w-lg">
+			<Card className="w-full">
 				<CardHeader className="flex flex-row items-start">
 					<div className="space-y-1.5">
 						<CardTitle>Friends</CardTitle>
@@ -137,7 +137,7 @@ export const FriendsList = () => {
 					</div>
 				</CardContent>
 			</Card>
-			<Card className="w-full max-w-lg">
+			<Card className="w-full ">
 				<CardHeader className="flex flex-row items-start">
 					<div className="space-y-1.5">
 						<CardTitle>Waiting for approval from you</CardTitle>
@@ -189,7 +189,7 @@ export const FriendsList = () => {
 					</div>
 				</CardContent>
 			</Card>
-			<Card className="w-full max-w-lg">
+			<Card className="w-full ">
 				<CardHeader className="flex flex-row items-start">
 					<div className="space-y-1.5">
 						<CardTitle>Waiting for approval from your friends</CardTitle>
