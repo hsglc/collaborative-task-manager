@@ -12,7 +12,7 @@ import {
 } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { addFriends } from "@/app/features/friendship/actions/addFriends";
+import { sendInvitation } from "@/app/features/friendship/actions/sendInvitation";
 
 import { getCurrentFormattedDate } from "@/app/lib/utils";
 //@ts-expect-error
@@ -30,10 +30,10 @@ const initialState = {
 };
 
 export const AddNewFriendsCard = () => {
-	const [state, formAction] = useFormState(addFriends, initialState);
+	const [state, formAction] = useFormState(sendInvitation, initialState);
 
 	return (
-		<Card>
+		<Card className="w-full xl:w-1/2">
 			<form action={formAction}>
 				<CardHeader className="flex flex-row items-start">
 					<div className="space-y-1.5">

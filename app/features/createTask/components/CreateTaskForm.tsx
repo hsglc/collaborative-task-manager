@@ -34,7 +34,7 @@ export function CreateTaskForm() {
 	useEffect(() => {
 		(async () => {
 			const friends = await fetchFriends();
-			if (friends) setFriends(friends);
+			if (friends) setFriends(friends.acceptedFriendshipRequests);
 		})();
 	}, []);
 

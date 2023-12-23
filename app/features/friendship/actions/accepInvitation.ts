@@ -4,7 +4,7 @@ import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function cancelInvitation(
+export async function acceptInvitation(
 	target: "user_id" | "friend_id",
 	id: string,
 ) {
@@ -28,18 +28,20 @@ export async function cancelInvitation(
 		},
 	);
 
-	const { data, error } = await supabase
+	const { error } = await supabase
 		.from("friends")
-		.update({ status: "Rejected" })
+		.update({
+			status: "Accepted",
+		})
 		.eq(target, id);
 
 	if (!error) {
 		revalidatePath("/friends");
 		return {
-			message: "Invitation canceled",
+			message: "You are now friends!",
 		};
 	}
 	return {
-		message: "Failed to cancel invitation",
+		message: "Failed to accept invitation",
 	};
 }

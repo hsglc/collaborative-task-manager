@@ -18,13 +18,14 @@ import { cancelInvitation } from "../actions/cancelInvitation";
 
 type Props = {
 	id: string;
+	target: "friend_id" | "user_id";
 };
 
-export const CancelInvitationButton = ({ id }: Props) => {
+export const CancelInvitationButton = ({ id, target }: Props) => {
 	const { toast } = useToast();
 
 	const cancelInvitationHandler = async () => {
-		const response = await cancelInvitation(id);
+		const response = await cancelInvitation(target, id);
 
 		toast({
 			title: response.message,
@@ -37,7 +38,7 @@ export const CancelInvitationButton = ({ id }: Props) => {
 		<>
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button variant="destructive" className="p-3 h-8">
+					<Button type="button" variant="destructive" className="p-3 h-8">
 						Cancel
 					</Button>
 				</DialogTrigger>
@@ -51,7 +52,11 @@ export const CancelInvitationButton = ({ id }: Props) => {
 						</DialogDescription>
 					</DialogHeader>
 					<DialogClose asChild>
-						<Button variant="destructive" onClick={cancelInvitationHandler}>
+						<Button
+							type="button"
+							variant="destructive"
+							onClick={cancelInvitationHandler}
+						>
 							Yes
 						</Button>
 					</DialogClose>
@@ -60,5 +65,3 @@ export const CancelInvitationButton = ({ id }: Props) => {
 		</>
 	);
 };
-
-export default CancelInvitationButton;

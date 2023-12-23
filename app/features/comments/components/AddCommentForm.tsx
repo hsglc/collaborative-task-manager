@@ -40,8 +40,6 @@ export function AddCommentForm() {
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
-
 		const {
 			data: { user },
 		} = await supabase.auth.getUser();

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
-export async function addFriends(prevState: any, formData: FormData) {
+export async function sendInvitation(prevState: any, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -45,6 +45,21 @@ export async function addFriends(prevState: any, formData: FormData) {
 		return {
 			title: "Error",
 			message: "User not found",
+			isSuccess: false,
+		};
+	}
+
+	const { data: existingFriend } = await supabase
+		.from("friends")
+		.select("friend_id")
+		.eq("friend_id", friend[0].id)
+		.eq("user_id", user?.id)
+		.eq("status", "Pending");
+
+	if (existingFriend?.length !== 0) {
+		return {
+			title: "Error",
+			message: "Your invitation is already pending.",
 			isSuccess: false,
 		};
 	}

@@ -29,23 +29,66 @@ export async function fetchFriends() {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	const { data: friends } = await supabase
-		.from("friends")
-		.select(
-			`
-  user_id,
-  status,
-  profiles!friends_friend_id_fkey (
-	id,
-	user_email,
-	username,
-	avatar_url,
-	full_name
-  )
-`,
-		)
-		.eq("user_id", user?.id)
-		.returns<Friendship[]>();
+	const [sentInvitations, receivedInvitations] = await Promise.all([
+		supabase
+			.from("friends")
+			.select(
+				`
+	  user_id,
+	  status,
+	  profiles!friends_user_id_fkey (
+		id,
+		user_email,
+		avatar_url,
+		full_name
+	  )
+	`,
+			)
+			.eq("friend_id", user?.id)
+			.neq("status", "Rejected")
+			.returns<Friendship[]>(),
+		supabase
+			.from("friends")
+			.select(
+				`
+	  user_id,
+	  status,
+	  profiles!friends_friend_id_fkey (
+		id,
+		user_email,
+		avatar_url,
+		full_name
+	  )
+	`,
+			)
+			.eq("user_id", user?.id)
+			.neq("status", "Rejected")
+			.returns<Friendship[]>(),
+	]);
 
-	return friends;
+	const acceptedFriendshipRequests = sentInvitations.data?.filter(
+		(val) => val.status === "Accepted",
+	);
+	const acceptedFriendshipRequests2 = receivedInvitations.data?.filter(
+		(val) => val.status === "Accepted",
+	);
+
+	if (acceptedFriendshipRequests && acceptedFriendshipRequests2) {
+		const mergedRequests = [
+			...acceptedFriendshipRequests,
+			...acceptedFriendshipRequests2,
+		];
+		const unique = mergedRequests.filter(
+			(v, i, a) => a.findIndex((t) => t.profiles.id === v.profiles.id) === i,
+		);
+		return {
+			sendingFriendshipRequests: sentInvitations.data?.filter(
+				(val) => val.status === "Pending",
+			),
+			receivingFriendshipRequests: receivedInvitations.data?.filter(
+				(val) => val.status === "Pending",
+			),
+			acceptedFriendshipRequests: unique,
+		};
+	}
 }
