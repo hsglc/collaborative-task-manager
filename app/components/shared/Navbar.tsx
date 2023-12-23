@@ -145,14 +145,14 @@ export function NavigationBar({ user }: { user: any }) {
 					<NavbarMenuItem key={`${item}-${index}`}>
 						<NextUILink
 							color={
-								index === 2
+								pathname === `/${item.toLocaleLowerCase()}`
 									? "primary"
-									: index === menuItems.length - 1
+									: item === "Log Out"
 									  ? "danger"
 									  : "foreground"
 							}
 							className="w-full"
-							href="#"
+							href={`/${item.toLowerCase()}`}
 							size="lg"
 						>
 							{item}
