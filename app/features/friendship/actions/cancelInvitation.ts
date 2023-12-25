@@ -4,10 +4,7 @@ import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function cancelInvitation(
-	target: "user_id" | "friend_id",
-	id: string,
-) {
+export async function cancelInvitation(id: number) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -31,7 +28,7 @@ export async function cancelInvitation(
 	const { data, error } = await supabase
 		.from("friends")
 		.update({ status: "Rejected" })
-		.eq(target, id);
+		.eq("id", id);
 
 	if (!error) {
 		revalidatePath("/friends");

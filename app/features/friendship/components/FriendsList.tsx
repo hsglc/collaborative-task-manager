@@ -2,6 +2,8 @@
 
 import { fetchFriends } from "../actions/fetchFriends";
 
+import { Spinner } from "@nextui-org/react";
+
 import {
 	Card,
 	CardContent,
@@ -17,7 +19,7 @@ import {
 } from "@/app/components/ui/avatar";
 import { Friendship } from "@/types/friends";
 import { createBrowserClient } from "@supabase/ssr";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { AcceptInvitationButton } from "./AcceptInvitationButton";
 import { CancelInvitationButton } from "./CancelInvitationButton";
 
@@ -25,6 +27,7 @@ interface FriendState {
 	sendingInvitations: Friendship[];
 	receivedInvitations: Friendship[];
 	acceptedInvitations: Friendship[];
+	userId: string;
 }
 
 type FriendAction =
@@ -37,7 +40,30 @@ const initialState: FriendState = {
 	sendingInvitations: [],
 	receivedInvitations: [],
 	acceptedInvitations: [],
+	userId: "",
 };
+
+interface Notifications {
+	commit_timestamp: string;
+	errors: any;
+	eventType: "DELETE" | "INSERT" | "UPDATE";
+	new: Notification;
+	old: Old;
+	schema: string;
+	table: string;
+}
+
+interface Notification {
+	created_at: string;
+	id: number;
+	user_id: string;
+	friend_id: string;
+	status: "Pending" | "Accepted" | "Rejected";
+}
+
+interface Old {
+	id: number;
+}
 
 function friendReducer(state: FriendState, action: FriendAction): FriendState {
 	switch (action.type) {
@@ -56,6 +82,7 @@ function friendReducer(state: FriendState, action: FriendAction): FriendState {
 
 export const FriendsList = () => {
 	const [state, dispatch] = useReducer(friendReducer, initialState);
+	const [loading, setLoading] = useState(true);
 
 	const supabase = createBrowserClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -64,16 +91,25 @@ export const FriendsList = () => {
 
 	const fetchFriendships = async () => {
 		const data = await fetchFriends();
-		if (data) {
+
+		const [friendships, user] = await Promise.all([
+			fetchFriends(),
+			supabase.auth.getUser(),
+		]);
+		if (friendships && user.data.user) {
 			dispatch({
 				type: "INITIALIZE",
 				payload: {
-					sendingInvitations: data.sendingFriendshipRequests as Friendship[],
-					receivedInvitations: data.receivingFriendshipRequests as Friendship[],
-					acceptedInvitations: data.acceptedFriendshipRequests,
+					userId: user.data.user.id,
+					sendingInvitations:
+						friendships.sendingFriendshipRequests as Friendship[],
+					receivedInvitations:
+						friendships.receivingFriendshipRequests as Friendship[],
+					acceptedInvitations: friendships.acceptedFriendshipRequests,
 				},
 			});
 		}
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -85,9 +121,19 @@ export const FriendsList = () => {
 			.channel("custom-all-channel")
 			.on(
 				"postgres_changes",
-				{ event: "*", schema: "public", table: "friends" },
+				{
+					event: "*",
+					schema: "public",
+					table: "friends",
+				},
 				(payload) => {
-					fetchFriendships();
+					const notification = payload as Notifications;
+					if (
+						notification.new.user_id === state.userId ||
+						notification.new.friend_id === state.userId
+					) {
+						fetchFriendships();
+					}
 				},
 			)
 			.subscribe();
@@ -108,31 +154,28 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{state.acceptedInvitations.length > 0 ? (
-							state.acceptedInvitations.map((friend) => (
-								<div
-									key={friend.profiles.id}
-									className="flex items-center gap-3"
-								>
+						{!loading ? (
+							state.acceptedInvitations.map((friendship) => (
+								<div key={friendship.id} className="flex items-center gap-3">
 									<Avatar className="h-9 w-9">
 										<AvatarImage
-											alt={friend.profiles.full_name}
-											src={friend.profiles.avatar_url}
+											alt={friendship.profiles.full_name}
+											src={friendship.profiles.avatar_url}
 										/>
 										<AvatarFallback>F1</AvatarFallback>
 									</Avatar>
 									<div className="grid gap-0.5 text-xs">
 										<div className="font-medium">
-											{friend.profiles.full_name}
+											{friendship.profiles.full_name}
 										</div>
 										<div className="text-zinc-500 dark:text-zinc-400">
-											{friend.profiles.user_email}
+											{friendship.profiles.user_email}
 										</div>
 									</div>
 								</div>
 							))
 						) : (
-							<p>Loading...</p>
+							<Spinner />
 						)}
 					</div>
 				</CardContent>
@@ -148,44 +191,40 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{state.receivedInvitations.length > 0
-							? state.receivedInvitations.map((friend) => (
-									<div
-										key={friend.profiles.id}
-										className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between"
-									>
-										<div className="flex items-center gap-3">
-											<Avatar className="h-9 w-9">
-												<AvatarImage
-													alt={friend.profiles.full_name}
-													src={friend.profiles.avatar_url}
-												/>
-												<AvatarFallback>
-													{friend.profiles.full_name.slice(0, 2)}
-												</AvatarFallback>
-											</Avatar>
-											<div className="grid gap-0.5 text-xs">
-												<div className="font-medium">
-													{friend.profiles.full_name}
-												</div>
-												<div className="text-zinc-500 dark:text-zinc-400">
-													{friend.profiles.user_email}
-												</div>
+						{!loading ? (
+							state.receivedInvitations.map((friendship) => (
+								<div
+									key={friendship.id}
+									className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between"
+								>
+									<div className="flex items-center gap-3">
+										<Avatar className="h-9 w-9">
+											<AvatarImage
+												alt={friendship.profiles.full_name}
+												src={friendship.profiles.avatar_url}
+											/>
+											<AvatarFallback>
+												{friendship.profiles.full_name.slice(0, 2)}
+											</AvatarFallback>
+										</Avatar>
+										<div className="grid gap-0.5 text-xs">
+											<div className="font-medium">
+												{friendship.profiles.full_name}
+											</div>
+											<div className="text-zinc-500 dark:text-zinc-400">
+												{friendship.profiles.user_email}
 											</div>
 										</div>
-										<div className="flex gap-3">
-											<AcceptInvitationButton
-												target="friend_id"
-												id={friend.profiles.id}
-											/>
-											<CancelInvitationButton
-												target="friend_id"
-												id={friend.profiles.id}
-											/>
-										</div>
 									</div>
-							  ))
-							: null}
+									<div className="flex gap-3">
+										<AcceptInvitationButton id={friendship.id} />
+										<CancelInvitationButton id={friendship.id} />
+									</div>
+								</div>
+							))
+						) : (
+							<Spinner />
+						)}
 					</div>
 				</CardContent>
 			</Card>
@@ -200,40 +239,39 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{state.sendingInvitations.length > 0
-							? state.sendingInvitations.map((friend) => (
-									<div
-										key={friend.user_id}
-										className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between"
-									>
-										<div className="flex items-center gap-3">
-											<Avatar className="h-9 w-9">
-												<AvatarImage
-													alt={friend.profiles.full_name}
-													src={friend.profiles.avatar_url}
-												/>
-												<AvatarFallback>
-													{friend.profiles.full_name.slice(0, 2)}
-												</AvatarFallback>
-											</Avatar>
-											<div className="grid gap-0.5 text-xs">
-												<div className="font-medium">
-													{friend.profiles.full_name}
-												</div>
-												<div className="text-zinc-500 dark:text-zinc-400">
-													{friend.profiles.user_email}
-												</div>
+						{!loading ? (
+							state.sendingInvitations.map((friendship) => (
+								<div
+									key={friendship.id}
+									className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between"
+								>
+									<div className="flex items-center gap-3">
+										<Avatar className="h-9 w-9">
+											<AvatarImage
+												alt={friendship.profiles.full_name}
+												src={friendship.profiles.avatar_url}
+											/>
+											<AvatarFallback>
+												{friendship.profiles.full_name.slice(0, 2)}
+											</AvatarFallback>
+										</Avatar>
+										<div className="grid gap-0.5 text-xs">
+											<div className="font-medium">
+												{friendship.profiles.full_name}
+											</div>
+											<div className="text-zinc-500 dark:text-zinc-400">
+												{friendship.profiles.user_email}
 											</div>
 										</div>
-										<div className="flex xl:block">
-											<CancelInvitationButton
-												target="user_id"
-												id={friend.profiles.id}
-											/>
-										</div>
 									</div>
-							  ))
-							: null}
+									<div className="flex xl:block">
+										<CancelInvitationButton id={friendship.id} />
+									</div>
+								</div>
+							))
+						) : (
+							<Spinner />
+						)}
 					</div>
 				</CardContent>
 			</Card>

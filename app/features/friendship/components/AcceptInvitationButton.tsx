@@ -8,15 +8,14 @@ import { getCurrentFormattedDate } from "@/app/lib/utils";
 import { acceptInvitation } from "../actions/accepInvitation";
 
 type Props = {
-	id: string;
-	target: "friend_id" | "user_id";
+	id: number;
 };
 
-export const AcceptInvitationButton = ({ id, target }: Props) => {
+export const AcceptInvitationButton = ({ id }: Props) => {
 	const { toast } = useToast();
 
 	const acceptInvitationHandler = async () => {
-		const response = await acceptInvitation(target, id);
+		const response = await acceptInvitation(id);
 
 		toast({
 			title: response.message,

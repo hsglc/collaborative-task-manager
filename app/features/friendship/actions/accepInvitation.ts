@@ -4,10 +4,7 @@ import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function acceptInvitation(
-	target: "user_id" | "friend_id",
-	id: string,
-) {
+export async function acceptInvitation(id: number) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -28,12 +25,12 @@ export async function acceptInvitation(
 		},
 	);
 
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from("friends")
 		.update({
 			status: "Accepted",
 		})
-		.eq(target, id);
+		.eq("id", id);
 
 	if (!error) {
 		revalidatePath("/friends");

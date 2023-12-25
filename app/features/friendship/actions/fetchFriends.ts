@@ -29,12 +29,13 @@ export async function fetchFriends() {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	const [sentInvitations, receivedInvitations] = await Promise.all([
+	const [receivedInvitations, sentInvitations] = await Promise.all([
 		supabase
 			.from("friends")
 			.select(
 				`
 	  user_id,
+	  id,
 	  status,
 	  profiles!friends_user_id_fkey (
 		id,
@@ -53,6 +54,7 @@ export async function fetchFriends() {
 				`
 	  user_id,
 	  status,
+	  id,
 	  profiles!friends_friend_id_fkey (
 		id,
 		user_email,

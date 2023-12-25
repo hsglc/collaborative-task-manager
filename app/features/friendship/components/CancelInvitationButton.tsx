@@ -17,15 +17,14 @@ import {
 import { cancelInvitation } from "../actions/cancelInvitation";
 
 type Props = {
-	id: string;
-	target: "friend_id" | "user_id";
+	id: number;
 };
 
-export const CancelInvitationButton = ({ id, target }: Props) => {
+export const CancelInvitationButton = ({ id }: Props) => {
 	const { toast } = useToast();
 
 	const cancelInvitationHandler = async () => {
-		const response = await cancelInvitation(target, id);
+		const response = await cancelInvitation(id);
 
 		toast({
 			title: response.message,
