@@ -39,7 +39,7 @@
 		"eslint-config-next": "^14.0.3",
 		"framer-motion": "^10.16.5",
 		"lucide-react": "^0.279.0",
-		"next": "14.0.4",
+		"next": "14.0.5-canary.25",
 		"postcss": "8.4.24",
 		"react": "0.0.0-experimental-5bcade5fc-20231208",
 		"react-day-picker": "^8.9.1",
