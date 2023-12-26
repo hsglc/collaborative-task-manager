@@ -4,9 +4,7 @@
 		"dev": "next dev --turbo",
 		"build": "next build",
 		"start": "next start",
-		"lint": "pnpm dlx @biomejs/biome lint app/**/*",
-		"format": "pnpm dlx @biomejs/biome format app/**/* --write",
-		"check": "pnpm dlx @biomejs/biome check --apply app/**/*",
+		"lint": "pnpm dlx @biomejs/biome check --apply app/**/*",
 		"prepare": "husky install"
 	},
 	"dependencies": {

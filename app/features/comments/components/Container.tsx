@@ -89,7 +89,9 @@ export function Container({ taskId }: Props) {
 
 	return (
 		<>
-			<Button onPress={fetchComments}>Comments ({comments.length})</Button>
+			<Button color="primary" variant="bordered" onPress={fetchComments}>
+				Comments
+			</Button>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 				<ModalContent>
 					{(onClose) => (
