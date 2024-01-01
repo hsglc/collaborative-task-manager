@@ -5,8 +5,12 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
+type PrevState = {
+	message: string;
+};
+
 export async function editTask(
-	prevState: any,
+	prevState: PrevState,
 	formData: FormData,
 	id: number,
 	created_by: string,

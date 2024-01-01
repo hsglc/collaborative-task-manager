@@ -41,10 +41,10 @@ export function TaskPriority({ priority }: Props) {
 	}
 }
 
-function SignalLowIcon(props: any) {
+function SignalLowIcon({ className }: { className: string }) {
 	return (
 		<svg
-			{...props}
+			className={className}
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"
@@ -61,10 +61,9 @@ function SignalLowIcon(props: any) {
 	);
 }
 
-function SignalMediumIcon(props: any) {
+function SignalMediumIcon({ className }: { className: string }) {
 	return (
 		<svg
-			{...props}
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"
@@ -82,10 +81,9 @@ function SignalMediumIcon(props: any) {
 	);
 }
 
-function SignalHighIcon(props: any) {
+function SignalHighIcon({ className }: { className: string }) {
 	return (
 		<svg
-			{...props}
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
 			height="24"

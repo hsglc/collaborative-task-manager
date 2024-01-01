@@ -45,7 +45,7 @@ const initialState: FriendState = {
 
 interface Notifications {
 	commit_timestamp: string;
-	errors: any;
+	errors: string[];
 	eventType: "DELETE" | "INSERT" | "UPDATE";
 	new: Notification;
 	old: Old;

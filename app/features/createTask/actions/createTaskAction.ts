@@ -5,7 +5,11 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
-export async function createTask(prevState: any, formData: FormData) {
+type PrevState = {
+	message: string;
+};
+
+export async function createTask(prevState: PrevState, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
