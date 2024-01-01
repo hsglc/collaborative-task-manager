@@ -3,139 +3,132 @@
  * @see https://v0.dev/t/Ge7cNuDER53
  */
 
-'use client';
-
-import { createBrowserClient } from '@supabase/ssr';
+"use client";
 
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@/app/components/ui/card';
+} from "@/app/components/ui/card";
 import {
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
-} from '@/app/components/ui/tabs';
+} from "@/app/components/ui/tabs";
 
-import { Notification } from '@/types/notifications';
+import { Notification } from "@/types/notifications";
 
-import { Button } from '@/app/components/ui/button';
+import { Button } from "@/app/components/ui/button";
 
 type Props = {
 	notifications: Notification[];
 };
 
 export function Notifications({ notifications }: Props) {
-	const supabase = createBrowserClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-	);
+	// const supabase = createBrowserClient(
+	// 	process.env.NEXT_PUBLIC_SUPABASE_URL!,
+	// 	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+	// );
 
 	return (
-		<Card className='w-full max-w-xs'>
+		<Card className="w-full max-w-xs">
 			<CardHeader>
 				<CardTitle>Notifications</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Tabs
-					className='flex flex-col gap-2 items-start'
-					defaultValue='unread'>
-					<TabsList className='w-full justify-start'>
-						<TabsTrigger value='unread'>Unread</TabsTrigger>
-						<TabsTrigger value='read'>Read</TabsTrigger>
+				<Tabs className="flex flex-col gap-2 items-start" defaultValue="unread">
+					<TabsList className="w-full justify-start">
+						<TabsTrigger value="unread">Unread</TabsTrigger>
+						<TabsTrigger value="read">Read</TabsTrigger>
 					</TabsList>
-					<TabsContent className='p-1' value='unread'>
+					<TabsContent className="p-1" value="unread">
 						{notifications.length > 0
 							? notifications
 									.filter((nf) => nf.is_read === false)
 									.map((nf) => (
 										<div
 											key={nf.id}
-											className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
-											<span className='flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500' />
-											<div className='grid gap-1'>
-												<p className='text-sm font-medium'>
-													New friend request from{' '}
-													{/* {nf.receiver_email} . */}
+											className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+										>
+											<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+											<div className="grid gap-1">
+												<p className="text-sm font-medium">
+													New friend request from {/* {nf.receiver_email} . */}
 												</p>
-												<div className='mt-2'>
-													<Button
-														size='sm'
-														variant='outline'>
+												<div className="mt-2">
+													<Button size="sm" variant="outline">
 														Accept
 													</Button>
 													<Button
-														className='ml-2'
-														size='sm'
-														variant='destructive'>
+														className="ml-2"
+														size="sm"
+														variant="destructive"
+													>
 														Decline
 													</Button>
 												</div>
-												<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+												<p className="text-sm text-zinc-500 dark:text-zinc-400">
 													5 min ago
 												</p>
 											</div>
 										</div>
 									))
 							: null}
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
-							<span className='flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500' />
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
-									New task assigned to you!
-								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+							<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">New task assigned to you!</p>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									1 min ago
 								</p>
 							</div>
 						</div>
 					</TabsContent>
-					<TabsContent className='p-1' value='read'>
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
+					<TabsContent className="p-1" value="read">
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
 							<svg
-								className=' w-4 h-4 translate-y-1'
-								fill='none'
-								height='24'
-								stroke='currentColor'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth='2'
-								viewBox='0 0 24 24'
-								width='24'
-								xmlns='http://www.w3.org/2000/svg'>
-								<polyline points='20 6 9 17 4 12' />
+								className=" w-4 h-4 translate-y-1"
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								viewBox="0 0 24 24"
+								width="24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<polyline points="20 6 9 17 4 12" />
 							</svg>
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">
 									Friend request accepted by Jane Doe.
 								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									2 hours ago
 								</p>
 							</div>
 						</div>
-						<div className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
+						<div className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
 							<svg
-								className=' w-4 h-4 translate-y-1'
-								fill='none'
-								height='24'
-								stroke='currentColor'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth='2'
-								viewBox='0 0 24 24'
-								width='24'
-								xmlns='http://www.w3.org/2000/svg'>
-								<polyline points='20 6 9 17 4 12' />
+								className=" w-4 h-4 translate-y-1"
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								viewBox="0 0 24 24"
+								width="24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<polyline points="20 6 9 17 4 12" />
 							</svg>
-							<div className='grid gap-1'>
-								<p className='text-sm font-medium'>
-									You completed a task!
-								</p>
-								<p className='text-sm text-zinc-500 dark:text-zinc-400'>
+							<div className="grid gap-1">
+								<p className="text-sm font-medium">You completed a task!</p>
+								<p className="text-sm text-zinc-500 dark:text-zinc-400">
 									3 days ago
 								</p>
 							</div>

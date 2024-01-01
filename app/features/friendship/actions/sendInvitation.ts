@@ -5,7 +5,13 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
-export async function sendInvitation(prevState: any, formData: FormData) {
+type PrevState = {
+	title: string;
+	message: string;
+	isSuccess: boolean;
+};
+
+export async function sendInvitation(prevState: PrevState, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -76,6 +82,16 @@ export async function sendInvitation(prevState: any, formData: FormData) {
 			isSuccess: false,
 		};
 	}
+	await supabase
+		.from("notifications")
+		.insert([
+			{
+				sender_id: user?.id,
+				target_id: friend[0].id,
+				type: "Friendship Request",
+			},
+		])
+		.select();
 	revalidatePath("/friends");
 	return {
 		title: "Success",
