@@ -1,8 +1,9 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
-import { NavigationBar } from './Navbar';
-import { User } from '@/types/users';
+import { User } from "@/types/users";
+
+import { NavigationBar } from "./Navbar";
 
 export const Header = async () => {
 	const cookieStore = cookies();
@@ -16,7 +17,7 @@ export const Header = async () => {
 					return cookieStore.get(name)?.value;
 				},
 			},
-		}
+		},
 	);
 
 	const { data } = await supabase.auth.getUser();
