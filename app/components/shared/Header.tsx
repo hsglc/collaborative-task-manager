@@ -1,7 +1,8 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
-import { NavigationBar } from "./Navbar";
+import { NavigationBar } from './Navbar';
+import { User } from '@/types/users';
 
 export const Header = async () => {
 	const cookieStore = cookies();
@@ -15,13 +16,13 @@ export const Header = async () => {
 					return cookieStore.get(name)?.value;
 				},
 			},
-		},
+		}
 	);
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	return <NavigationBar user={user} />;
+	const { data } = await supabase.auth.getUser();
+	if (!data.user) return null;
+
+	return <NavigationBar user={data.user as User} />;
 };
 
 export default Header;
