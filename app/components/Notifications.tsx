@@ -3,94 +3,97 @@
  * @see https://v0.dev/t/Ge7cNuDER53
  */
 
-'use client';
+"use client";
 
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@/app/components/ui/card';
+	CardFooter,
+} from "@/app/components/ui/card";
 import {
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
-} from '@/app/components/ui/tabs';
+} from "@/app/components/ui/tabs";
 
-import { Notification } from '@/types/notifications';
+import { CheckIcon } from "@/icons/CheckIcon";
 
-import { Button } from '@/app/components/ui/button';
+import { Notification } from "@/types/notifications";
+
+import { Button } from "@/app/components/ui/button";
 
 type Props = {
 	notifications: Notification[];
+	markAsRead: (notificationId: number) => void;
 };
 
-export function Notifications({ notifications }: Props) {
+export function Notifications({ notifications, markAsRead }: Props) {
 	return (
-		<Card className=''>
+		<Card>
 			<CardHeader>
 				<CardTitle>Notifications</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Tabs
-					className='flex flex-col gap-2 items-start'
-					defaultValue='unread'>
-					<TabsList className='w-full justify-start'>
-						<TabsTrigger value='unread'>Unread</TabsTrigger>
+				<Tabs className="flex flex-col gap-2 items-start" defaultValue="unread">
+					<TabsList className="w-full justify-start">
+						<TabsTrigger value="unread">Unread</TabsTrigger>
 					</TabsList>
-					<TabsContent className='p-1' value='unread'>
-						{notifications.length > 0
-							? notifications
-									.filter((nf) => nf.is_read === false)
-									.map((nf) => (
-										<div
-											key={nf.id}
-											className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'>
-											<span className='flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500' />
-											{nf.type ===
-												'Friendship Request' && (
-												<div className='grid gap-1'>
-													<p className='text-sm font-medium'>
-														{nf.type}
-													</p>
-													<div className='mt-2'>
-														<Button
-															size='sm'
-															variant='outline'>
-															Accept
-														</Button>
-														<Button
-															className='ml-2'
-															size='sm'
-															variant='destructive'>
-															Decline
-														</Button>
-													</div>
-													<p className='text-sm text-zinc-500 dark:text-zinc-400'>
-														ID {nf.sender_id} user
-														sent to you
-													</p>
+					<TabsContent className="p-1" value="unread">
+						{notifications.length > 0 ? (
+							notifications
+								.filter((nf) => nf.is_read === false)
+								.map((nf) => (
+									<div
+										key={nf.id}
+										className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+									>
+										<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+										{nf.type === "Friendship Request" && (
+											<div className="grid gap-1">
+												<p className="text-sm font-medium">{nf.type}</p>
+												<div className="mt-2">
+													<Button size="sm" variant="outline">
+														Accept
+													</Button>
+													<Button
+														className="ml-2"
+														size="sm"
+														variant="destructive"
+													>
+														Decline
+													</Button>
 												</div>
-											)}
-											{nf.type ===
-												'New Task Assigned' && (
-												<div className='mb-4   pb-4 last:mb-0 last:pb-0'>
-													<div className='grid gap-1'>
-														<p className='text-sm font-medium'>
-															{nf.type}
-														</p>
-														<p className='text-sm text-zinc-500 dark:text-zinc-400'>
-															ID {nf.sender_id}{' '}
-															user assigned to you
-															a new task.
-														</p>
-													</div>
+												<p className="text-sm text-zinc-500 dark:text-zinc-400">
+													ID {nf.sender_id} user sent to you
+												</p>
+											</div>
+										)}
+										{nf.type === "New Task Assigned" && (
+											<div className="mb-4   pb-4 last:mb-0 last:pb-0">
+												<div className="grid gap-1">
+													<p className="text-sm font-medium">{nf.type}</p>
+													<p className="text-sm text-zinc-500 dark:text-zinc-400">
+														ID {nf.sender_id} user assigned to you a new task.
+													</p>
+													<Button
+														onClick={() => markAsRead(nf.id)}
+														className="w-full"
+														variant="outline"
+													>
+														<CheckIcon className="mr-2 h-4 w-4" />
+														Mark as read
+													</Button>
 												</div>
-											)}
-										</div>
-									))
-							: null}
+											</div>
+										)}
+									</div>
+								))
+						) : (
+							<p>No notifications yet.</p>
+						)}
 					</TabsContent>
 				</Tabs>
 			</CardContent>
