@@ -33,11 +33,11 @@ import clsx from "clsx";
 import { ToastAction } from "@/app/components/ui/toast";
 import { useToast } from "@/app/components/ui/use-toast";
 
+import { getCurrentFormattedDate } from "@/app/lib/utils";
 import { Notification } from "@/types/notifications";
 import { User } from "@/types/users";
 import { createBrowserClient } from "@supabase/ssr";
 import Link from "next/link";
-import { getCurrentFormattedDate } from "@/app/lib/utils";
 
 type EventType = "INSERT" | "UPDATE" | "DELETE";
 

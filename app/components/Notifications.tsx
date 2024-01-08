@@ -8,9 +8,9 @@
 import {
 	Card,
 	CardContent,
+	CardFooter,
 	CardHeader,
 	CardTitle,
-	CardFooter,
 } from "@/app/components/ui/card";
 import {
 	Tabs,
