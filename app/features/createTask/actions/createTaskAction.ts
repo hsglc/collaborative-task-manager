@@ -39,7 +39,7 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 		description: z.string().trim().min(2).max(250),
 		priority: z.string(),
 		status: z.string(),
-		assignee: z.string(),
+		assignee: z.string() ?? (user?.id as string),
 		created_by: z.string(),
 	});
 

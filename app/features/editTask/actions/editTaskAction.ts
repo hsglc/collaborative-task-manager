@@ -9,12 +9,7 @@ type PrevState = {
 	message: string;
 };
 
-export async function editTask(
-	prevState: PrevState,
-	formData: FormData,
-	id: number,
-	created_by: string,
-) {
+export async function editTask(prevState: PrevState, formData: FormData) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -35,17 +30,11 @@ export async function editTask(
 		},
 	);
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-
 	const formSchema = z.object({
 		name: z.string().trim().min(2).max(50),
 		description: z.string().trim().min(2).max(250),
 		priority: z.string(),
 		status: z.string(),
-		assignee: z.string(),
-		created_by: z.string(),
 	});
 
 	const updatedTask = {
@@ -53,17 +42,19 @@ export async function editTask(
 		description: formData.get("description"),
 		priority: formData.get("priority"),
 		status: formData.get("status"),
-		assignee: formData.get("assignee") || (user?.id as string),
-		created_by: created_by as string,
 	};
 
 	const data = formSchema.parse(updatedTask);
 
-	const { error } = await supabase
+	const { error, data: t } = await supabase
 		.from("tasks")
-		.update([data])
-		.eq("id", id)
-		.select();
+		.update({
+			name: data.name,
+			description: data.description,
+			priority: data.priority,
+			status: data.status,
+		})
+		.eq("id", formData.get("id"));
 
 	if (error) {
 		return {

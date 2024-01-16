@@ -21,7 +21,6 @@ import {
 } from "@/app/components/ui/select";
 import { FormActionButton } from "../../../components/shared/FormActionButton";
 
-import { DatePickerWithRange } from "@/app/components/DatePickerWithRange";
 import { Friendship } from "@/types/friends";
 import { Task } from "@/types/tasks";
 
@@ -45,12 +44,8 @@ export function EditTaskForm({ task }: Props) {
 	}, []);
 
 	return (
-		<form
-			className="text-white text-lg space-y-4"
-			action={(formData: FormData) =>
-				formAction(formData, task.id, task.created_by)
-			}
-		>
+		<form className="text-white text-lg space-y-4" action={formAction}>
+			<Input name="id" className="hidden" defaultValue={task.id} />
 			<Label className="flex flex-col gap-2">
 				Name
 				<Input name="name" className="text-black" defaultValue={task.name} />
@@ -97,11 +92,11 @@ export function EditTaskForm({ task }: Props) {
 					</SelectContent>
 				</Select>
 			</Label>
-			<Label className="flex flex-col gap-2">
+			{/* <Label className='flex flex-col gap-2'>
 				Assignee
-				<Select name="assignee" defaultValue={task.assignee}>
-					<SelectTrigger className="w-full text-black">
-						<SelectValue placeholder="Select the Assignee" />
+				<Select name='assignee' defaultValue={task.assignee}>
+					<SelectTrigger className='w-full text-black'>
+						<SelectValue placeholder='Select the Assignee' />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectGroup>
@@ -109,20 +104,15 @@ export function EditTaskForm({ task }: Props) {
 							{friends?.map((friend) => (
 								<SelectItem
 									key={friend.profiles.id}
-									value={friend.profiles.id.toString()}
-								>
+									value={friend.profiles.id.toString()}>
 									{friend.profiles.user_email}
 								</SelectItem>
 							))}
 						</SelectGroup>
 					</SelectContent>
 				</Select>
-			</Label>
+			</Label> */}
 
-			<Label className="flex flex-col gap-2">
-				Selete Time Range
-				<DatePickerWithRange />
-			</Label>
 			<FormActionButton>Edit</FormActionButton>
 			{state?.message}
 		</form>
