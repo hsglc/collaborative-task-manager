@@ -7,10 +7,15 @@ import { fetchTasks } from "@/app/features/tasks/actions/fetchTasks";
 import { Sidebar } from "@/app/components/Sidebar";
 import { Tasks } from "@/app/features/tasks/components/Tasks";
 
+type searchParams = {
+	category: "myTasks" | "sharedByOthers" | "sharedWithMe";
+	search: "important" | "completed" | "uncompleted";
+};
+
 export default async function DashboardIndex({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string };
+	searchParams: searchParams;
 }) {
 	const cookieStore = cookies();
 
@@ -33,14 +38,27 @@ export default async function DashboardIndex({
 		redirect("/login");
 	}
 
-	const { tasks, numberOfTasks } = await fetchTasks(
-		searchParams.search ?? "all",
-	);
+	const { category, search } = searchParams;
+
+	const tasks = await fetchTasks();
+
+	const categorizedTasks =
+		category === "myTasks"
+			? tasks.myTasks
+			: category === "sharedByOthers"
+			  ? tasks.sharedByOthers
+			  : tasks.sharedWithMe;
+	const searchedTasks =
+		search === "important"
+			? categorizedTasks.filter((task) => task.priority === "High")
+			: search === "completed"
+			  ? categorizedTasks.filter((task) => task.status === "Done")
+			  : categorizedTasks.filter((task) => task.status !== "Done");
 
 	return (
 		<div className="grid grid-cols-9 h-screen max-h-[calc(100vh-64px)]">
-			<Sidebar />
-			<Tasks tasks={tasks ?? []} />
+			<Sidebar tasks={tasks} />
+			<Tasks tasks={searchedTasks} />
 		</div>
 	);
 }
