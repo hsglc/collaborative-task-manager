@@ -39,24 +39,6 @@ const categorizeTasks = (tasks: Task[]) => {
 };
 
 export const SidebarLinks = ({ tasks }: Props) => {
-	const links = [
-		{
-			name: "Important tasks",
-			search: "important",
-			sizeOfTasks: 3,
-		},
-		{
-			name: "Completed tasks",
-			search: "completed",
-			sizeOfTasks: 3,
-		},
-		{
-			name: "Uncompleted tasks",
-			search: "uncompleted",
-			sizeOfTasks: 3,
-		},
-	];
-
 	const categorizedTasks = {
 		myTasks: {
 			tasks: categorizeTasks(tasks.myTasks),
@@ -68,9 +50,7 @@ export const SidebarLinks = ({ tasks }: Props) => {
 			tasks: categorizeTasks(tasks.sharedWithMe),
 		},
 	};
-	console.log("categorizedTasks :", categorizedTasks);
 
-	// const { push } = useRouter();
 	const searchQuery = useSearchParams().get("search");
 	const categoryQuery = useSearchParams().get("category");
 
