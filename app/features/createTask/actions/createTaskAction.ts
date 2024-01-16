@@ -7,6 +7,7 @@ import { z } from "zod";
 
 type PrevState = {
 	message: string;
+	isSuccess: boolean;
 };
 
 export async function createTask(prevState: PrevState, formData: FormData) {
@@ -58,7 +59,14 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 	if (error) {
 		return {
 			message: "Failed to create task",
+			isSuccess: false,
 		};
 	}
+
 	revalidatePath("/dashboard");
+
+	return {
+		message: "Task created successfully",
+		isSuccess: true,
+	};
 }

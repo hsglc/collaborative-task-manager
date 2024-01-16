@@ -52,7 +52,7 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
 						<Trash2 className="hover:scale-110 hover:cursor-pointer  transition-all " />
 					</HoverCardTrigger>
 					<HoverCardContent
-						className="bg-secondary border-primary text-white text-center text-lg"
+						className="bg-black text-white text-center text-lg"
 						align="center"
 						sideOffset={20}
 					>
@@ -60,7 +60,7 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
 					</HoverCardContent>
 				</HoverCard>
 			</AlertDialogTrigger>
-			<AlertDialogContent>
+			<AlertDialogContent className="bg-black text-white">
 				<AlertDialogHeader>
 					<AlertDialogTitle className="text-2xl">
 						Are you absolutely sure?
@@ -71,8 +71,13 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={deleteTaskHandler}>
+					<AlertDialogCancel className="bg-white text-black">
+						Cancel
+					</AlertDialogCancel>
+					<AlertDialogAction
+						className="bg-red-500 text-white"
+						onClick={deleteTaskHandler}
+					>
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>

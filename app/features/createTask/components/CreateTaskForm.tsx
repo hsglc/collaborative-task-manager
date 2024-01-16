@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 //@ts-expect-error
 import { useFormState } from "react-dom";
@@ -23,11 +23,20 @@ import { FormActionButton } from "../../../components/shared/FormActionButton";
 
 import { Friendship } from "@/types/friends";
 
-const initialState = {
-	message: null,
+type Props = {
+	setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
+};
+type InitialState = {
+	message: null | string;
+	isSuccess: boolean;
 };
 
-export function CreateTaskForm() {
+const initialState: InitialState = {
+	message: null,
+	isSuccess: false,
+};
+
+export function CreateTaskForm({ setIsDialogOpen }: Props) {
 	const [friends, setFriends] = useState<Friendship[]>([]);
 	const [state, formAction] = useFormState(createTask, initialState);
 
@@ -38,15 +47,29 @@ export function CreateTaskForm() {
 		})();
 	}, []);
 
+	useEffect(() => {
+		if (state.isSuccess) {
+			setIsDialogOpen(false);
+		}
+	}, [state]);
+
 	return (
 		<form className="text-white text-lg space-y-4" action={formAction}>
 			<Label className="flex flex-col gap-2">
 				Name
-				<Input name="name" className="text-black" />
+				<Input
+					placeholder="Task name"
+					name="name"
+					className="text-black placeholder:text-black"
+				/>
 			</Label>
 			<Label className="flex flex-col gap-2">
 				Description
-				<Input name="description" className="text-black" />
+				<Input
+					placeholder="Task description"
+					name="description"
+					className="text-black placeholder:text-black"
+				/>
 			</Label>
 			<Label className="flex flex-col gap-2">
 				Priority

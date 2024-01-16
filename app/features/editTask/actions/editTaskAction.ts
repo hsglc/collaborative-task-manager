@@ -7,6 +7,7 @@ import { z } from "zod";
 
 type PrevState = {
 	message: string;
+	isSuceess: boolean;
 };
 
 export async function editTask(prevState: PrevState, formData: FormData) {
@@ -46,7 +47,7 @@ export async function editTask(prevState: PrevState, formData: FormData) {
 
 	const data = formSchema.parse(updatedTask);
 
-	const { error, data: t } = await supabase
+	const { error } = await supabase
 		.from("tasks")
 		.update({
 			name: data.name,
@@ -59,6 +60,7 @@ export async function editTask(prevState: PrevState, formData: FormData) {
 	if (error) {
 		return {
 			message: "Failed to edit task",
+			isSuccess: true,
 		};
 	}
 

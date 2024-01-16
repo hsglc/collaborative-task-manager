@@ -1,3 +1,5 @@
+"use client";
+
 import { CreateTaskForm } from "@/app/features/createTask/components/CreateTaskForm";
 
 import { Button } from "@/app/components/ui/button";
@@ -9,12 +11,16 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/app/components/ui/dialog";
+import { useState } from "react";
 
 export const CreateTaskDialog = () => {
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+
 	return (
-		<Dialog>
+		<Dialog open={isDialogOpen}>
 			<DialogTrigger asChild>
 				<Button
+					onClick={() => setIsDialogOpen(true)}
 					variant="outline"
 					className="text-primaryYellow w-full font-semibold text-lg p-6"
 				>
@@ -28,7 +34,7 @@ export const CreateTaskDialog = () => {
 						Create a new task to save it to your list
 					</DialogDescription>
 				</DialogHeader>
-				<CreateTaskForm />
+				<CreateTaskForm setIsDialogOpen={setIsDialogOpen} />
 			</DialogContent>
 		</Dialog>
 	);
