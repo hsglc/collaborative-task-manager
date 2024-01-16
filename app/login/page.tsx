@@ -2,12 +2,26 @@
 import { Button, Divider } from "@nextui-org/react";
 
 import SocialloginButton from "@/app/components/SocialLoginButton";
+import { createBrowserClient } from "@supabase/ssr";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import MailInput from "./mailInput";
 import Messages from "./messages";
 import PasswordInput from "./passwordInput";
 
 export default async function Login() {
+	const supabase = createBrowserClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+	);
+
+	const {
+		data: { session },
+	} = await supabase.auth.getSession();
+	if (session) {
+		redirect("/dashboard");
+	}
+
 	return (
 		<div className="flex flex-col w-full m-auto px-8 sm:max-w-2xl justify-center gap-2 h-screen max-h-[calc(100vh-68px)] space-y-8 text-lg">
 			<div className="flex flex-col gap-3 ">
