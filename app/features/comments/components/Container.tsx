@@ -43,8 +43,6 @@ export function Container({ taskId }: Props) {
 	);
 
 	const fetchComments = async () => {
-		push(`/dashboard?taskId=${taskId}`);
-
 		onOpen();
 		const { data: comments, error } = await supabase
 			.from("comments")
@@ -105,21 +103,31 @@ export function Container({ taskId }: Props) {
 										comments.map((comment) => (
 											<React.Fragment key={comment.id}>
 												<div className="flex flex-col gap-1">
-													<p>{comment.comment}</p>
-													<div className="flex gap-2 items-center">
-														<Avatar>
-															<AvatarImage src={comment.profiles.avatar_url} />
-															<AvatarFallback>
-																<Skeleton className="w-[40px] h-[20px] rounded-full" />
-															</AvatarFallback>
-														</Avatar>
-														<div className="flex flex-col text-sm">
-															<p>{comment.profiles.full_name}</p>
-															<p className="text-gray-400">
-																{formatRelativeTime(
-																	new Date(comment.created_at),
-																)}
-															</p>
+													<div className="flex flex-col gap-2">
+														<div>
+															<div className="flex gap-2">
+																<Avatar>
+																	<AvatarImage
+																		src={comment.profiles.avatar_url}
+																	/>
+																	<AvatarFallback>
+																		<Skeleton className="w-[40px] h-[20px] rounded-full" />
+																	</AvatarFallback>
+																</Avatar>
+																<div className="flex flex-col justify-between">
+																	<div className="flex gap-3 items-center">
+																		<p className="text-medium font-bold">
+																			{comment.profiles.full_name}
+																		</p>
+																		<p className="text-gray-400 text-xs">
+																			{formatRelativeTime(
+																				new Date(comment.created_at),
+																			)}
+																		</p>
+																	</div>
+																	<p>{comment.comment}</p>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -130,7 +138,7 @@ export function Container({ taskId }: Props) {
 										<p>There are no comments yet.</p>
 									)}
 								</ScrollArea>
-								<AddCommentForm />
+								<AddCommentForm taskId={taskId} />
 							</ModalBody>
 							<ModalFooter>
 								<Button color="danger" variant="light" onPress={onClose}>

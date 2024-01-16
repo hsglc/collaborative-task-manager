@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createBrowserClient } from "@supabase/ssr";
-import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -22,11 +21,11 @@ const formSchema = z.object({
 		message: "Comment must be at least 1 character long.",
 	}),
 });
+type Props = {
+	taskId: number;
+};
 
-export function AddCommentForm() {
-	const searchParams = useSearchParams();
-	const taskId = searchParams.get("taskId");
-
+export function AddCommentForm({ taskId }: Props) {
 	const supabase = createBrowserClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
