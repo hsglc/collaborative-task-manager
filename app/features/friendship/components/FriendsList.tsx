@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchFriends } from "../actions/fetchFriends";
+import { removeFriend } from "../actions/removeFriend";
 
 import { Spinner } from "@nextui-org/react";
 
@@ -13,12 +14,20 @@ import {
 } from "@/app/components/ui/card";
 
 import {
+	HoverCard,
+	HoverCardContent,
+	HoverCardTrigger,
+} from "@/app/components/ui/hover-card";
+
+import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "@/app/components/ui/avatar";
+import { Button } from "@/app/components/ui/button";
 import { Friendship } from "@/types/friends";
 import { createBrowserClient } from "@supabase/ssr";
+import { UserMinus } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import { AcceptInvitationButton } from "./AcceptInvitationButton";
 import { CancelInvitationButton } from "./CancelInvitationButton";
@@ -90,8 +99,6 @@ export const FriendsList = () => {
 	);
 
 	const fetchFriendships = async () => {
-		const data = await fetchFriends();
-
 		const [friendships, user] = await Promise.all([
 			fetchFriends(),
 			supabase.auth.getUser(),
@@ -128,9 +135,11 @@ export const FriendsList = () => {
 				},
 				(payload) => {
 					const notification = payload as Notifications;
+					const oldNotification = notification.old;
 					if (
 						notification.new.user_id === state.userId ||
-						notification.new.friend_id === state.userId
+						notification.new.friend_id === state.userId ||
+						oldNotification
 					) {
 						fetchFriendships();
 					}
@@ -156,22 +165,38 @@ export const FriendsList = () => {
 					<div className="space-y-2">
 						{!loading ? (
 							state.acceptedInvitations.map((friendship) => (
-								<div key={friendship.id} className="flex items-center gap-3">
-									<Avatar className="h-9 w-9">
-										<AvatarImage
-											alt={friendship.profiles.full_name}
-											src={friendship.profiles.avatar_url}
-										/>
-										<AvatarFallback>F1</AvatarFallback>
-									</Avatar>
-									<div className="grid gap-0.5 text-xs">
-										<div className="font-medium">
-											{friendship.profiles.full_name}
-										</div>
-										<div className="text-zinc-500 dark:text-zinc-400">
-											{friendship.profiles.user_email}
+								<div className="flex justify-between">
+									<div key={friendship.id} className="flex items-center gap-3">
+										<Avatar className="h-9 w-9">
+											<AvatarImage
+												alt={friendship.profiles.full_name}
+												src={friendship.profiles.avatar_url}
+											/>
+											<AvatarFallback>F1</AvatarFallback>
+										</Avatar>
+										<div className="grid gap-0.5 text-xs">
+											<div className="font-medium">
+												{friendship.profiles.full_name}
+											</div>
+											<div className="text-zinc-500 dark:text-zinc-400">
+												{friendship.profiles.user_email}
+											</div>
 										</div>
 									</div>
+									<Button onClick={() => removeFriend(friendship.id)}>
+										<HoverCard>
+											<HoverCardTrigger>
+												<UserMinus className="hover:scale-110 hover:cursor-pointer  transition-all " />
+											</HoverCardTrigger>
+											<HoverCardContent
+												className="bg-black text-white text-center text-lg"
+												align="center"
+												sideOffset={20}
+											>
+												Remove this friend
+											</HoverCardContent>
+										</HoverCard>
+									</Button>
 								</div>
 							))
 						) : (

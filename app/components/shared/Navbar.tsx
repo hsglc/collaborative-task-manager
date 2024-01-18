@@ -2,7 +2,6 @@
 
 import { Logo } from "@/icons/Logo";
 import {
-	Button,
 	Link as NextUILink,
 	Navbar,
 	NavbarBrand,
@@ -88,8 +87,6 @@ export function NavigationBar({ user }: { user: User }) {
 		}
 	};
 
-	console.log(notifications);
-
 	useEffect(() => {
 		fetchNotifications();
 	}, []);
@@ -109,7 +106,7 @@ export function NavigationBar({ user }: { user: User }) {
 					const evenType: EventType = payload.eventType;
 					const newNotification = payload.new as Notification;
 					const oldNotification = payload.old as Notification;
-					console.log("payload :", payload);
+
 					if (evenType === "INSERT") {
 						setNotifications((notifications) => [
 							...notifications,
