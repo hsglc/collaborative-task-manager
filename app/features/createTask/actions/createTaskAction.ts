@@ -40,7 +40,7 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 		description: z.string().trim().min(2).max(250),
 		priority: z.string(),
 		status: z.string(),
-		assignee: z.string() ?? (user?.id as string),
+		assignee: z.string(),
 		created_by: z.string(),
 	});
 
@@ -61,6 +61,16 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 			message: "Failed to create task",
 			isSuccess: false,
 		};
+	}
+
+	if (formData.get("assignee") !== null) {
+		await supabase.from("notifications").insert([
+			{
+				sender_id: user?.id,
+				target_id: formData.get("assignee"),
+				type: "New Task Assigned",
+			},
+		]);
 	}
 
 	revalidatePath("/dashboard");

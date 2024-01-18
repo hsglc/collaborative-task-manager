@@ -17,7 +17,7 @@ export const CreateTaskDialog = () => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	return (
-		<Dialog open={isDialogOpen}>
+		<Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
 			<DialogTrigger asChild>
 				<Button
 					onClick={() => setIsDialogOpen(true)}

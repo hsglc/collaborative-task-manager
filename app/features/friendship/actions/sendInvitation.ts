@@ -72,8 +72,7 @@ export async function sendInvitation(prevState: PrevState, formData: FormData) {
 
 	const { error } = await supabase
 		.from("friends")
-		.insert([{ user_id: user?.id, friend_id: friend[0].id }])
-		.select();
+		.insert([{ user_id: user?.id, friend_id: friend[0].id }]);
 
 	if (error) {
 		return {
@@ -82,16 +81,13 @@ export async function sendInvitation(prevState: PrevState, formData: FormData) {
 			isSuccess: false,
 		};
 	}
-	await supabase
-		.from("notifications")
-		.insert([
-			{
-				sender_id: user?.id,
-				target_id: friend[0].id,
-				type: "Friendship Request",
-			},
-		])
-		.select();
+	await supabase.from("notifications").insert([
+		{
+			sender_id: user?.id,
+			target_id: friend[0].id,
+			type: "Friendship Request",
+		},
+	]);
 	revalidatePath("/friends");
 	return {
 		title: "Success",
