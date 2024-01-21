@@ -54,20 +54,9 @@ export function Notifications({ notifications, markAsRead }: Props) {
 										{nf.type === "Friendship Request" && (
 											<div className="grid gap-1">
 												<p className="text-sm font-medium">{nf.type}</p>
-												<div className="mt-2">
-													<Button size="sm" variant="outline">
-														Accept
-													</Button>
-													<Button
-														className="ml-2"
-														size="sm"
-														variant="destructive"
-													>
-														Decline
-													</Button>
-												</div>
 												<p className="text-sm text-zinc-500 dark:text-zinc-400">
-													ID {nf.sender_id} user sent to you
+													{nf.profiles.full_name} sent to you a friendship
+													request.
 												</p>
 											</div>
 										)}
@@ -76,7 +65,7 @@ export function Notifications({ notifications, markAsRead }: Props) {
 												<div className="grid gap-1">
 													<p className="text-sm font-medium">{nf.type}</p>
 													<p className="text-sm text-zinc-500 dark:text-zinc-400">
-														ID {nf.sender_id} user assigned to you a new task.
+														{nf.profiles.full_name} assigned to you a new task.
 													</p>
 													<Button
 														onClick={() => markAsRead(nf.id)}

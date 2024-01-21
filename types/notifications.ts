@@ -10,4 +10,10 @@ export type Notification = {
 		| 'Friendship Rejected'
 		| 'New Task Assigned'
 		| 'Task Updated';
+	profiles: {
+		avatar_url: string;
+		full_name: string;
+		user_email: string;
+		id: string;
+	};
 };
