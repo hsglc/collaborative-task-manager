@@ -123,10 +123,7 @@ export function NavigationBar({ user }: { user: User }) {
 					const oldNotification = payload.old as Notification;
 
 					if (evenType === "INSERT") {
-						setNotifications((notifications) => [
-							...notifications,
-							newNotification,
-						]);
+						fetchNotifications();
 					} else if (evenType === "UPDATE") {
 						setNotifications((notifications) => [
 							...notifications.filter((nf) => nf.id !== newNotification.id),
@@ -243,8 +240,8 @@ export function NavigationBar({ user }: { user: User }) {
 				</NavbarContent>
 			)}
 			<NavbarMenu>
-				{menuItems.map((item, index) => (
-					<NavbarMenuItem key={`${item}-${index}`}>
+				{menuItems.map((item) => (
+					<NavbarMenuItem key={item}>
 						<NextUILink
 							color={
 								pathname === `/${item.toLocaleLowerCase()}`

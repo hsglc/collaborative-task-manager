@@ -1,5 +1,6 @@
 "use server";
 
+import { Friend } from "@/types/friends";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -25,20 +26,31 @@ export async function acceptInvitation(id: number) {
 		},
 	);
 
-	const { data, error } = await supabase
+	const { data } = await supabase
 		.from("friends")
-		.update({
-			status: "Accepted",
-		})
-		.eq("id", id);
+		.select("*")
+		.eq("id", id)
+		.returns<Friend[]>();
 
-	if (!error) {
-		revalidatePath("/friends");
-		return {
-			message: "You are now friends!",
-		};
+	if (data) {
+		await Promise.all([
+			supabase
+				.from("friends")
+				.update({
+					status: "Accepted",
+				})
+				.eq("id", id),
+			supabase.from("notifications").insert({
+				is_read: false,
+				sender_id: data[0].friend_id,
+				target_id: data[0].user_id,
+				type: "Friendship Accepted",
+			}),
+		]);
 	}
+
+	revalidatePath("/friends");
 	return {
-		message: "Failed to accept invitation",
+		message: "You are now friends!",
 	};
 }

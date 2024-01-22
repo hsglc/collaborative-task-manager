@@ -1,5 +1,6 @@
 "use server";
 
+import { Friend } from "@/types/friends";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -25,18 +26,31 @@ export async function cancelInvitation(id: number) {
 		},
 	);
 
-	const { data, error } = await supabase
+	const { data } = await supabase
 		.from("friends")
-		.update({ status: "Rejected" })
-		.eq("id", id);
+		.select("*")
+		.eq("id", id)
+		.returns<Friend[]>();
 
-	if (!error) {
-		revalidatePath("/friends");
-		return {
-			message: "Invitation canceled",
-		};
+	if (data) {
+		await Promise.all([
+			supabase
+				.from("friends")
+				.update({
+					status: "Rejected",
+				})
+				.eq("id", id),
+			supabase.from("notifications").insert({
+				is_read: false,
+				sender_id: data[0].friend_id,
+				target_id: data[0].user_id,
+				type: "Friendship Rejected",
+			}),
+		]);
 	}
+
+	revalidatePath("/friends");
 	return {
-		message: "Failed to cancel invitation",
+		message: "Invitation canceled!",
 	};
 }

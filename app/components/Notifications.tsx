@@ -8,7 +8,6 @@
 import {
 	Card,
 	CardContent,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/app/components/ui/card";
@@ -60,12 +59,30 @@ export function Notifications({ notifications, markAsRead }: Props) {
 												</p>
 											</div>
 										)}
+										{nf.type === "Friendship Accepted" && (
+											<div className="grid gap-1">
+												<p className="text-sm font-medium">{nf.type}</p>
+												<p className="text-sm text-zinc-500 dark:text-zinc-400">
+													{nf.profiles?.full_name} accepted your friendship
+													request.
+												</p>
+											</div>
+										)}
+										{nf.type === "Friendship Rejected" && (
+											<div className="grid gap-1">
+												<p className="text-sm font-medium">{nf.type}</p>
+												<p className="text-sm text-zinc-500 dark:text-zinc-400">
+													{nf.profiles?.full_name} rejected your friendship
+													request.
+												</p>
+											</div>
+										)}
 										{nf.type === "New Task Assigned" && (
 											<div className="mb-4   pb-4 last:mb-0 last:pb-0">
 												<div className="grid gap-1">
 													<p className="text-sm font-medium">{nf.type}</p>
 													<p className="text-sm text-zinc-500 dark:text-zinc-400">
-														{nf.profiles.full_name} assigned to you a new task.
+														{nf.profiles?.full_name} assigned to you a new task.
 													</p>
 													<Button
 														onClick={() => markAsRead(nf.id)}
