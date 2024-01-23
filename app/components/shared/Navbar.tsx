@@ -85,7 +85,7 @@ export function NavigationBar({ user }: { user: User }) {
 	};
 
 	const markAsRead = async (notificationId: number) => {
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from("notifications")
 			.delete()
 			.eq("id", notificationId);

@@ -58,7 +58,7 @@ export default async function DashboardIndex({
 	return (
 		<div className="grid grid-cols-9 h-screen max-h-[calc(100vh-64px)]">
 			<Sidebar tasks={tasks} />
-			<Tasks tasks={searchedTasks} />
+			<Tasks tasks={searchedTasks} search={search} />
 		</div>
 	);
 }

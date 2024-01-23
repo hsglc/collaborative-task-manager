@@ -6,6 +6,7 @@ import { DeleteTaskDialog } from "@/app/features/deleteTask/components/DeleteTas
 import { EditTaskDialog } from "@/app/features/editTask/components/EditTaskDialog";
 import { TaskPriority } from "@/app/features/taskPriority/components/TaskPriority";
 
+import { formatRelativeTime } from "@/app/lib/utils";
 import { Task as NewTask } from "@/types/tasks";
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 
 export const Task = ({ task }: Props) => {
 	const date = parseISO(task.created_at);
-	const formattedDate = format(date, "dd/MM/yyyy");
+	const formattedDate = formatRelativeTime(new Date(task.created_at));
 
 	return (
 		<div className="rounded-md p-4 text-black shadow-sm shadow-black space-y-3 ">
@@ -30,9 +31,9 @@ export const Task = ({ task }: Props) => {
 					<Container taskId={task.id} />
 				</div>
 			</div>
-			<div className="flex-center gap-2">
+			<div className="flex-center gap-2 text-gray-500">
 				<Calendar />
-				{formattedDate}
+				created {formattedDate}
 			</div>
 		</div>
 	);
