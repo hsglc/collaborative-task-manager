@@ -163,7 +163,7 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{!loading ? (
+						{!loading && state.acceptedInvitations.length > 0 ? (
 							state.acceptedInvitations.map((friendship) => (
 								<div className="flex justify-between">
 									<div key={friendship.id} className="flex items-center gap-3">
@@ -199,6 +199,11 @@ export const FriendsList = () => {
 									</Button>
 								</div>
 							))
+						) : state.acceptedInvitations.length === 0 ? (
+							<p>
+								You don't have any friends yet. Add new friends by sending
+								friend requests.
+							</p>
 						) : (
 							<Spinner />
 						)}
@@ -216,7 +221,7 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{!loading ? (
+						{!loading && state.receivedInvitations.length > 0 ? (
 							state.receivedInvitations.map((friendship) => (
 								<div
 									key={friendship.id}
@@ -247,6 +252,8 @@ export const FriendsList = () => {
 									</div>
 								</div>
 							))
+						) : state.receivedInvitations.length === 0 ? (
+							<p>You don't have any pending friend requests.</p>
 						) : (
 							<Spinner />
 						)}
@@ -264,7 +271,7 @@ export const FriendsList = () => {
 				</CardHeader>
 				<CardContent className="border-t pt-4">
 					<div className="space-y-2">
-						{!loading ? (
+						{!loading && state.sendingInvitations.length > 0 ? (
 							state.sendingInvitations.map((friendship) => (
 								<div
 									key={friendship.id}
@@ -294,6 +301,8 @@ export const FriendsList = () => {
 									</div>
 								</div>
 							))
+						) : state.sendingInvitations.length === 0 ? (
+							<p>You don't have any pending friend requests.</p>
 						) : (
 							<Spinner />
 						)}
