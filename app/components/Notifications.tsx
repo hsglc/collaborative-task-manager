@@ -57,6 +57,14 @@ export function Notifications({ notifications, markAsRead }: Props) {
 													{nf.profiles.full_name} sent to you a friendship
 													request.
 												</p>
+												<Button
+													onClick={() => markAsRead(nf.id)}
+													className="w-full"
+													variant="outline"
+												>
+													<CheckIcon className="mr-2 h-4 w-4" />
+													Mark as read
+												</Button>
 											</div>
 										)}
 										{nf.type === "Friendship Accepted" && (
@@ -66,6 +74,14 @@ export function Notifications({ notifications, markAsRead }: Props) {
 													{nf.profiles?.full_name} accepted your friendship
 													request.
 												</p>
+												<Button
+													onClick={() => markAsRead(nf.id)}
+													className="w-full"
+													variant="outline"
+												>
+													<CheckIcon className="mr-2 h-4 w-4" />
+													Mark as read
+												</Button>
 											</div>
 										)}
 										{nf.type === "Friendship Rejected" && (
@@ -75,6 +91,14 @@ export function Notifications({ notifications, markAsRead }: Props) {
 													{nf.profiles?.full_name} rejected your friendship
 													request.
 												</p>
+												<Button
+													onClick={() => markAsRead(nf.id)}
+													className="w-full"
+													variant="outline"
+												>
+													<CheckIcon className="mr-2 h-4 w-4" />
+													Mark as read
+												</Button>
 											</div>
 										)}
 										{nf.type === "New Task Assigned" && (
