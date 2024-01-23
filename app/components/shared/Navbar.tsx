@@ -96,6 +96,7 @@ export function NavigationBar({ user }: { user: User }) {
 
 			toast({
 				title: "Notification marked as read!",
+				duration: 3000,
 				description: getCurrentFormattedDate(),
 				action: <ToastAction altText="Close this toast!">Close</ToastAction>,
 			});
