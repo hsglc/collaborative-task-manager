@@ -7,7 +7,7 @@ import { EditTaskDialog } from "@/app/features/editTask/components/EditTaskDialo
 import { TaskPriority } from "@/app/features/taskPriority/components/TaskPriority";
 
 import { formatRelativeTime } from "@/app/lib/utils";
-import { Task as NewTask } from "@/types/tasks";
+import type { Task as NewTask } from "@/types/tasks";
 
 type Props = {
 	task: NewTask;

@@ -1,6 +1,6 @@
 import { Task } from "@/app/features/tasks/components/Task";
 
-import { Task as NewTask } from "@/types/tasks";
+import type { Task as NewTask } from "@/types/tasks";
 import NoTask from "./NoTask";
 
 type Props = {

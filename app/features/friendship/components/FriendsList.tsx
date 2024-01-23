@@ -25,7 +25,7 @@ import {
 	AvatarImage,
 } from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
-import { Friendship } from "@/types/friends";
+import type { Friendship } from "@/types/friends";
 import { createBrowserClient } from "@supabase/ssr";
 import { UserMinus } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";

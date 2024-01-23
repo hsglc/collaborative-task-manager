@@ -21,8 +21,8 @@ import {
 } from "@/app/components/ui/select";
 import { FormActionButton } from "../../../components/shared/FormActionButton";
 
-import { Friendship } from "@/types/friends";
-import { Task } from "@/types/tasks";
+import type { Friendship } from "@/types/friends";
+import type { Task } from "@/types/tasks";
 
 type Props = {
 	task: Task;

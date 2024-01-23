@@ -14,7 +14,7 @@ import {
 
 import LogoutButton from "@/app/components/LogoutButton";
 import { CreateTaskDialog } from "@/app/features/createTask/components/CreateTaskDialog";
-import { Task } from "@/types/tasks";
+import type { Task } from "@/types/tasks";
 import Link from "next/link";
 
 type Props = {

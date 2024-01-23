@@ -20,7 +20,7 @@ import {
 
 import { CheckIcon } from "@/icons/CheckIcon";
 
-import { Notification } from "@/types/notifications";
+import type { Notification } from "@/types/notifications";
 
 import { Button } from "@/app/components/ui/button";
 

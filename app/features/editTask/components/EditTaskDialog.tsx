@@ -17,7 +17,7 @@ import {
 	HoverCardTrigger,
 } from "@/app/components/ui/hover-card";
 
-import { Task } from "@/types/tasks";
+import type { Task } from "@/types/tasks";
 
 type Props = {
 	task: Task;

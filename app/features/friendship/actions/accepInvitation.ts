@@ -1,6 +1,6 @@
 "use server";
 
-import { Friend } from "@/types/friends";
+import type { Friend } from "@/types/friends";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";

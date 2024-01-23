@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 
 import { cn } from "@/app/lib/utils";
-import { Task } from "@/types/tasks";
+import type { Task } from "@/types/tasks";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import Link from "next/link";
 

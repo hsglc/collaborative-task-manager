@@ -16,7 +16,7 @@ import {
 	SelectValue,
 } from "@/app/components/ui/select";
 
-import { Friendship } from "@/types/friends";
+import type { Friendship } from "@/types/friends";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

@@ -24,7 +24,7 @@ import { Skeleton } from "@/app/components/ui/skeleton";
 import { ScrollArea } from "@/app/components/ui/scroll-area";
 import { Separator } from "@/app/components/ui/separator";
 import { formatRelativeTime } from "@/app/lib/utils";
-import { Comment } from "@/types/comments";
+import type { Comment } from "@/types/comments";
 import { AddCommentForm } from "./AddCommentForm";
 
 type Props = {

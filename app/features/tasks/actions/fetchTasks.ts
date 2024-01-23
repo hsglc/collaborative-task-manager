@@ -1,6 +1,6 @@
 "use server";
 
-import { Task } from "@/types/tasks";
+import type { Task } from "@/types/tasks";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
