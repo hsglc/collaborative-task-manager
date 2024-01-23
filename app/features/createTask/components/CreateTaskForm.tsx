@@ -2,14 +2,10 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-//@ts-expect-error
-import { useFormState } from "react-dom";
-
 import { createTask } from "@/app/features/createTask/actions/createTaskAction";
 import { fetchFriends } from "@/app/features/friendship/actions/fetchFriends";
 
 import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -19,26 +15,50 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/app/components/ui/select";
-import { FormActionButton } from "../../../components/shared/FormActionButton";
 
 import { Friendship } from "@/types/friends";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { formSchema } from "../schema";
+
+import { Button } from "@/app/components/ui/button";
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/app/components/ui/form";
 
 type Props = {
 	setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
 };
-type InitialState = {
-	message: null | string;
-	isSuccess: boolean;
-};
-
-const initialState: InitialState = {
-	message: null,
-	isSuccess: false,
-};
 
 export function CreateTaskForm({ setIsDialogOpen }: Props) {
 	const [friends, setFriends] = useState<Friendship[]>([]);
-	const [state, formAction] = useFormState(createTask, initialState);
+
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			name: "",
+			description: "",
+			priority: "Low",
+			status: "Backlog",
+			assignee: "",
+			created_by: "",
+		},
+	});
+
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { isSuccess } = await createTask(values);
+		if (isSuccess) {
+			setIsDialogOpen(false);
+		}
+	}
 
 	useEffect(() => {
 		(async () => {
@@ -47,87 +67,148 @@ export function CreateTaskForm({ setIsDialogOpen }: Props) {
 		})();
 	}, []);
 
-	useEffect(() => {
-		if (state.isSuccess) {
-			setIsDialogOpen(false);
-		}
-	}, [state]);
-
 	return (
-		<form className="text-white text-lg space-y-4" action={formAction}>
-			<Label className="flex flex-col gap-2">
-				Name
-				<Input
-					placeholder="Task name"
+		<Form {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-1">
+				<FormField
+					control={form.control}
 					name="name"
-					className="text-black placeholder:text-black"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Name</FormLabel>
+							<FormControl>
+								<Input
+									className="text-black"
+									placeholder="Task name"
+									{...field}
+								/>
+							</FormControl>
+							<FormDescription>This is your task's name.</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
 				/>
-			</Label>
-			<Label className="flex flex-col gap-2">
-				Description
-				<Input
-					placeholder="Task description"
+				<FormField
+					control={form.control}
 					name="description"
-					className="text-black placeholder:text-black"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Description </FormLabel>
+							<FormControl>
+								<Input
+									className="text-black"
+									placeholder="Task Description"
+									{...field}
+								/>
+							</FormControl>
+							<FormDescription>
+								This is your task's description.
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
 				/>
-			</Label>
-			<Label className="flex flex-col gap-2">
-				Priority
-				<Select name="priority">
-					<SelectTrigger className="w-full text-black">
-						<SelectValue placeholder="Select the priority" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							<SelectLabel>Priority</SelectLabel>
-							<SelectItem value="Low">Low</SelectItem>
-							<SelectItem value="Medium">Medium</SelectItem>
-							<SelectItem value="High">High</SelectItem>
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-			</Label>
-			<Label className="flex flex-col gap-2">
-				Status
-				<Select name="status">
-					<SelectTrigger className="w-full text-black">
-						<SelectValue placeholder="Select the status" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							<SelectLabel>Status</SelectLabel>
-							<SelectItem value="Backlog">Backlog</SelectItem>
-							<SelectItem value="In Progress">In Progress</SelectItem>
-							<SelectItem value="Waiting Approval">Waiting Approval</SelectItem>
-
-							<SelectItem value="Done">Done</SelectItem>
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-			</Label>
-			<Label className="flex flex-col gap-2">
-				Assignee
-				<Select name="assignee">
-					<SelectTrigger className="w-full text-black">
-						<SelectValue placeholder="Select the Assignee" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							<SelectLabel>Assignee</SelectLabel>
-							{friends?.map((friend) => (
-								<SelectItem
-									key={friend.profiles.id}
-									value={friend.profiles.id.toString()}
+				<FormField
+					control={form.control}
+					name="priority"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Priority</FormLabel>
+							<FormControl>
+								<Select
+									{...field}
+									onValueChange={field.onChange}
+									defaultValue={field.value}
 								>
-									{friend.profiles.user_email}
-								</SelectItem>
-							))}
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-			</Label>
-			{state?.message}
-			<FormActionButton>Create</FormActionButton>
-		</form>
+									<SelectTrigger className="w-full text-black">
+										<SelectValue placeholder="Select the priority" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											<SelectLabel>Priority</SelectLabel>
+											<SelectItem value="Low">Low</SelectItem>
+											<SelectItem value="Medium">Medium</SelectItem>
+											<SelectItem value="High">High</SelectItem>
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormDescription>This is your task's priority.</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="status"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Status</FormLabel>
+							<FormControl>
+								<Select
+									onValueChange={field.onChange}
+									{...field}
+									defaultValue={field.value}
+								>
+									<SelectTrigger className="w-full text-black">
+										<SelectValue placeholder="Select the status" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											<SelectLabel>Status</SelectLabel>
+											<SelectItem value="Backlog">Backlog</SelectItem>
+											<SelectItem value="In Progress">In Progress</SelectItem>
+											<SelectItem value="Waiting Approval">
+												Waiting Approval
+											</SelectItem>
+
+											<SelectItem value="Done">Done</SelectItem>
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormDescription>This is your task's status.</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="assignee"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Assignee</FormLabel>
+							<FormControl>
+								<Select {...field} onValueChange={field.onChange}>
+									<SelectTrigger className="w-full text-black">
+										<SelectValue placeholder="Select the Assignee" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											<SelectLabel>Assignee</SelectLabel>
+											{friends?.map((friend) => (
+												<SelectItem
+													key={friend.profiles.id}
+													value={friend.profiles.id.toString()}
+												>
+													{friend.profiles.user_email}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormDescription>
+								This is your public display name.
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<Button type="submit" className="w-full">
+					Create Task
+				</Button>
+			</form>
+		</Form>
 	);
 }

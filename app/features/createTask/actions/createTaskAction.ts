@@ -4,13 +4,11 @@ import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import { formSchema } from "../schema";
 
-type PrevState = {
-	message: string;
-	isSuccess: boolean;
-};
+type Params = z.infer<typeof formSchema>;
 
-export async function createTask(prevState: PrevState, formData: FormData) {
+export async function createTask(data: Params) {
 	const cookieStore = cookies();
 
 	const supabase = createServerClient(
@@ -35,27 +33,21 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	const formSchema = z.object({
-		name: z.string().trim().min(2).max(50),
-		description: z.string().trim().min(2).max(250),
-		priority: z.string(),
-		status: z.string(),
-		assignee: z.string(),
-		created_by: z.string(),
-	});
+	const result = formSchema.safeParse(data);
 
-	const createdTask = {
-		name: formData.get("name"),
-		description: formData.get("description"),
-		priority: formData.get("priority"),
-		status: formData.get("status"),
-		assignee: formData.get("assignee") || (user?.id as string),
-		created_by: user?.id as string,
-	};
+	if (!result.success || !user) {
+		return {
+			message: "Failed to create task",
+			isSuccess: false,
+		};
+	}
 
-	const data = formSchema.parse(createdTask);
+	result.data.created_by = user?.id;
+	if (result.data.assignee === "") {
+		result.data.assignee = user?.id;
+	}
 
-	const { error } = await supabase.from("tasks").insert([data]);
+	const { error } = await supabase.from("tasks").insert([result.data]);
 	if (error) {
 		return {
 			message: "Failed to create task",
@@ -63,11 +55,11 @@ export async function createTask(prevState: PrevState, formData: FormData) {
 		};
 	}
 
-	if (formData.get("assignee") !== null) {
+	if (data.assignee !== "") {
 		await supabase.from("notifications").insert([
 			{
 				sender_id: user?.id,
-				target_id: formData.get("assignee"),
+				target_id: data.assignee,
 				type: "New Task Assigned",
 			},
 		]);
