@@ -34,12 +34,18 @@ import {
 	FormMessage,
 } from "@/app/components/ui/form";
 
+import { ToastAction } from "@/app/components/ui/toast";
+import { useToast } from "@/app/components/ui/use-toast";
+import { getCurrentFormattedDate } from "@/app/lib/utils";
+
 type Props = {
 	setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export function CreateTaskForm({ setIsDialogOpen }: Props) {
 	const [friends, setFriends] = useState<Friendship[]>([]);
+
+	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -57,6 +63,12 @@ export function CreateTaskForm({ setIsDialogOpen }: Props) {
 		const { isSuccess } = await createTask(values);
 		if (isSuccess) {
 			setIsDialogOpen(false);
+			toast({
+				title: "Task created!",
+				duration: 3000,
+				description: getCurrentFormattedDate(),
+				action: <ToastAction altText="Close this toast">Close</ToastAction>,
+			});
 		}
 	}
 
