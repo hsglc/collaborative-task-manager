@@ -10,7 +10,7 @@ export default async function Friends() {
 	return (
 		<div className="flex h-screen max-h-[calc(100vh-64px)] p-1 xl:px-8">
 			<div className="space-y-2 w-full">
-				<h2 className="text-3xl font-bold">Friendship</h2>
+				<h1 className="text-3xl font-bold">Friendship</h1>
 				<p className="text-zinc-500 dark:text-zinc-400">
 					Send a friend request or check your existing friends.
 				</p>
