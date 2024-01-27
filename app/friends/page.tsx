@@ -3,10 +3,22 @@
  * @see https://v0.dev/t/Uhl4VMZMCDq
  */
 
+import { createClient } from "@/app/lib/supabase/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 import { AddNewFriendsCard } from "@/app/features/friendship/components/AddNewFriendsCard";
 import { FriendsList } from "@/app/features/friendship/components/FriendsList";
 
 export default async function Friends() {
+	const cookieStore = cookies();
+	const supabase = createClient(cookieStore);
+
+	const { data, error } = await supabase.auth.getUser();
+	if (error || !data?.user) {
+		redirect("/login");
+	}
+
 	return (
 		<div className="flex h-screen max-h-[calc(100vh-64px)] p-1 xl:px-8">
 			<div className="space-y-2 w-full">
