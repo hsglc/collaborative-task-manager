@@ -36,7 +36,7 @@ import {
 
 import { ToastAction } from "@/app/components/ui/toast";
 import { useToast } from "@/app/components/ui/use-toast";
-import { getCurrentFormattedDate } from "@/app/lib/utils";
+import { getCurrentFormattedDate } from "@/app/lib/shared";
 
 type Props = {
 	setIsDialogOpen: Dispatch<SetStateAction<boolean>>;

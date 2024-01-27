@@ -6,7 +6,7 @@ import { DeleteTaskDialog } from "@/app/features/deleteTask/components/DeleteTas
 import { EditTaskDialog } from "@/app/features/editTask/components/EditTaskDialog";
 import { TaskPriority } from "@/app/features/taskPriority/components/TaskPriority";
 
-import { formatRelativeTime } from "@/app/lib/utils";
+import { formatRelativeTime } from "@/app/lib/shared";
 import type { Task as NewTask } from "@/types/tasks";
 
 type Props = {
