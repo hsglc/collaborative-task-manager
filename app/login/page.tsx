@@ -1,4 +1,4 @@
-import SocialloginButton from "@/app/components/SocialLoginButton";
+import SocialloginButton from "@/app/login/components/SocialLoginButton";
 import { Button } from "@/app/components/ui/button";
 import { EmailInput } from "@/app/components/ui/email-input";
 import { PasswordInput } from "@/app/components/ui/password-input";
