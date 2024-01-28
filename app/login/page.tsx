@@ -3,7 +3,7 @@ import { EmailInput } from "@/app/components/ui/email-input";
 import { PasswordInput } from "@/app/components/ui/password-input";
 import { Separator } from "@/app/components/ui/separator";
 import { createClient } from "@/app/lib/server";
-import SocialloginButton from "@/app/login/components/SocialLoginButton";
+import { SocialLoginButton } from "./components/SocialLoginButton";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { login, signup } from "./actions";
@@ -20,8 +20,8 @@ export default async function Login() {
 	return (
 		<div className="flex flex-col w-full m-auto px-8 sm:max-w-2xl justify-center gap-2 h-screen max-h-[calc(100vh-68px)] space-y-8 text-lg">
 			<div className="flex flex-col gap-3 ">
-				<SocialloginButton provider="google" />
-				<SocialloginButton provider="github" />
+				<SocialLoginButton provider="google" />
+				<SocialLoginButton provider="github" />
 			</div>
 			<div className="flex items-center justify-between">
 				<Separator className="w-[210px]" />
