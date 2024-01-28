@@ -3,7 +3,7 @@
  * @see https://v0.dev/t/Uhl4VMZMCDq
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/app/lib/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

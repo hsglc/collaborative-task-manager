@@ -14,7 +14,7 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { sendInvitation } from "@/app/features/friendship/actions/sendInvitation";
 
-import { getCurrentFormattedDate } from "@/lib/shared";
+import { getCurrentFormattedDate } from "@/app/lib/shared";
 //@ts-expect-error
 import { useFormState } from "react-dom";
 

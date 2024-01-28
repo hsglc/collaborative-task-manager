@@ -3,7 +3,7 @@ import { Button } from "@/app/components/ui/button";
 
 import { ToastAction } from "@/app/components/ui/toast";
 import { useToast } from "@/app/components/ui/use-toast";
-import { getCurrentFormattedDate } from "@/lib/shared";
+import { getCurrentFormattedDate } from "@/app/lib/shared";
 
 import { acceptInvitation } from "../actions/accepInvitation";
 

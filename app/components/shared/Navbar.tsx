@@ -32,7 +32,7 @@ import clsx from "clsx";
 import { ToastAction } from "@/app/components/ui/toast";
 import { useToast } from "@/app/components/ui/use-toast";
 
-import { getCurrentFormattedDate } from "@/lib/shared";
+import { getCurrentFormattedDate } from "@/app/lib/shared";
 import type { Notification } from "@/types/notifications";
 import type { User } from "@/types/users";
 import { createBrowserClient } from "@supabase/ssr";

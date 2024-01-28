@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/components/ui/button";
 import { Input, InputProps } from "@/app/components/ui/input";
-import { cn } from "@/lib/shared";
+import { cn } from "@/app/lib/shared";
 import { MailIcon } from "lucide-react";
 import { forwardRef, useState } from "react";
 
