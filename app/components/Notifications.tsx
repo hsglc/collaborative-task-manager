@@ -5,18 +5,8 @@
 
 "use client";
 
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/app/components/ui/card";
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@/app/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 
 import { CheckIcon } from "@/icons/CheckIcon";
 
@@ -25,108 +15,86 @@ import type { Notification } from "@/types/notifications";
 import { Button } from "@/app/components/ui/button";
 
 type Props = {
-	notifications: Notification[];
-	markAsRead: (notificationId: number) => void;
+  notifications: Notification[];
+  markAsRead: (notificationId: number) => void;
 };
 
 export function Notifications({ notifications, markAsRead }: Props) {
-	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Notifications</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<Tabs className="flex flex-col gap-2 items-start" defaultValue="unread">
-					<TabsList className="w-full justify-start">
-						<TabsTrigger value="unread">Unread</TabsTrigger>
-					</TabsList>
-					<TabsContent className="p-1" value="unread">
-						{notifications.length > 0 ? (
-							notifications
-								.filter((nf) => nf.is_read === false)
-								.map((nf) => (
-									<div
-										key={nf.id}
-										className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
-									>
-										<span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
-										{nf.type === "Friendship Request" && (
-											<div className="grid gap-1">
-												<p className="text-sm font-medium">{nf.type}</p>
-												<p className="text-sm text-zinc-500 dark:text-zinc-400">
-													{nf.profiles.full_name} sent to you a friendship
-													request.
-												</p>
-												<Button
-													onClick={() => markAsRead(nf.id)}
-													className="w-full"
-													variant="outline"
-												>
-													<CheckIcon className="mr-2 h-4 w-4" />
-													Mark as read
-												</Button>
-											</div>
-										)}
-										{nf.type === "Friendship Accepted" && (
-											<div className="grid gap-1">
-												<p className="text-sm font-medium">{nf.type}</p>
-												<p className="text-sm text-zinc-500 dark:text-zinc-400">
-													{nf.profiles?.full_name} accepted your friendship
-													request.
-												</p>
-												<Button
-													onClick={() => markAsRead(nf.id)}
-													className="w-full"
-													variant="outline"
-												>
-													<CheckIcon className="mr-2 h-4 w-4" />
-													Mark as read
-												</Button>
-											</div>
-										)}
-										{nf.type === "Friendship Rejected" && (
-											<div className="grid gap-1">
-												<p className="text-sm font-medium">{nf.type}</p>
-												<p className="text-sm text-zinc-500 dark:text-zinc-400">
-													{nf.profiles?.full_name} rejected your friendship
-													request.
-												</p>
-												<Button
-													onClick={() => markAsRead(nf.id)}
-													className="w-full"
-													variant="outline"
-												>
-													<CheckIcon className="mr-2 h-4 w-4" />
-													Mark as read
-												</Button>
-											</div>
-										)}
-										{nf.type === "New Task Assigned" && (
-											<div className="mb-4   pb-4 last:mb-0 last:pb-0">
-												<div className="grid gap-1">
-													<p className="text-sm font-medium">{nf.type}</p>
-													<p className="text-sm text-zinc-500 dark:text-zinc-400">
-														{nf.profiles?.full_name} assigned to you a new task.
-													</p>
-													<Button
-														onClick={() => markAsRead(nf.id)}
-														className="w-full"
-														variant="outline"
-													>
-														<CheckIcon className="mr-2 h-4 w-4" />
-														Mark as read
-													</Button>
-												</div>
-											</div>
-										)}
-									</div>
-								))
-						) : (
-							<p>No notifications yet.</p>
-						)}
-					</TabsContent>
-				</Tabs>
-			</CardContent>
-		</Card>
-	);
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Notifications</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Tabs className="flex flex-col gap-2 items-start" defaultValue="unread">
+          <TabsList className="w-full justify-start">
+            <TabsTrigger value="unread">Unread</TabsTrigger>
+          </TabsList>
+          <TabsContent className="p-1" value="unread">
+            {notifications.length > 0 ? (
+              notifications
+                .filter((nf) => nf.is_read === false)
+                .map((nf) => (
+                  <div key={nf.id} className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+                    <span className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+                    {nf.type === "Friendship Request" && (
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">{nf.type}</p>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                          {nf.profiles.full_name} sent to you a friendship request.
+                        </p>
+                        <Button onClick={() => markAsRead(nf.id)} className="w-full" variant="outline">
+                          <CheckIcon className="mr-2 h-4 w-4" />
+                          Mark as read
+                        </Button>
+                      </div>
+                    )}
+                    {nf.type === "Friendship Accepted" && (
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">{nf.type}</p>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                          {nf.profiles?.full_name} accepted your friendship request.
+                        </p>
+                        <Button onClick={() => markAsRead(nf.id)} className="w-full" variant="outline">
+                          <CheckIcon className="mr-2 h-4 w-4" />
+                          Mark as read
+                        </Button>
+                      </div>
+                    )}
+                    {nf.type === "Friendship Rejected" && (
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">{nf.type}</p>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                          {nf.profiles?.full_name} rejected your friendship request.
+                        </p>
+                        <Button onClick={() => markAsRead(nf.id)} className="w-full" variant="outline">
+                          <CheckIcon className="mr-2 h-4 w-4" />
+                          Mark as read
+                        </Button>
+                      </div>
+                    )}
+                    {nf.type === "New Task Assigned" && (
+                      <div className="mb-4   pb-4 last:mb-0 last:pb-0">
+                        <div className="grid gap-1">
+                          <p className="text-sm font-medium">{nf.type}</p>
+                          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                            {nf.profiles?.full_name} assigned to you a new task.
+                          </p>
+                          <Button onClick={() => markAsRead(nf.id)} className="w-full" variant="outline">
+                            <CheckIcon className="mr-2 h-4 w-4" />
+                            Mark as read
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))
+            ) : (
+              <p>No notifications yet.</p>
+            )}
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
 }

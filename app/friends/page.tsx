@@ -11,24 +11,22 @@ import { AddNewFriendsCard } from "@/app/features/friendship/components/AddNewFr
 import { FriendsList } from "@/app/features/friendship/components/FriendsList";
 
 export default async function Friends() {
-	const cookieStore = cookies();
-	const supabase = createClient(cookieStore);
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-	const { data, error } = await supabase.auth.getUser();
-	if (error || !data?.user) {
-		redirect("/login");
-	}
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    redirect("/login");
+  }
 
-	return (
-		<div className="flex h-screen max-h-[calc(100vh-64px)] p-1 xl:px-8">
-			<div className="space-y-2 w-full">
-				<h1 className="text-3xl font-bold">Friendship</h1>
-				<p className="text-zinc-500 dark:text-zinc-400">
-					Send a friend request or check your existing friends.
-				</p>
-				<AddNewFriendsCard />
-				<FriendsList />
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex h-screen max-h-[calc(100vh-64px)] p-1 xl:px-8">
+      <div className="space-y-2 w-full">
+        <h1 className="text-3xl font-bold">Friendship</h1>
+        <p className="text-zinc-500 dark:text-zinc-400">Send a friend request or check your existing friends.</p>
+        <AddNewFriendsCard />
+        <FriendsList />
+      </div>
+    </div>
+  );
 }

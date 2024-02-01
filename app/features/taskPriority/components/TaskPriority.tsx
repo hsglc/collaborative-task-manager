@@ -5,99 +5,99 @@
 import { Badge } from "@/app/components/ui/badge";
 
 type Props = {
-	priority: "Low" | "Medium" | "High";
+  priority: "Low" | "Medium" | "High";
 };
 
 export function TaskPriority({ priority }: Props) {
-	switch (priority) {
-		case "Low":
-			return (
-				<Badge className="flex items-center bg-blue-200 text-blue-800 px-3 py-1 rounded">
-					<SignalLowIcon className="w-4 h-5 mr-1" />
-					<span>Low</span>
-				</Badge>
-			);
-		case "Medium":
-			return (
-				<Badge className="flex items-center bg-yellow-200 text-yellow-800 px-3 py-1 rounded">
-					<SignalMediumIcon className="w-4 h-5 mr-1" />
-					<span>Medium</span>
-				</Badge>
-			);
-		case "High":
-			return (
-				<Badge className="flex items-center bg-red-200 text-red-800 px-3 py-1 rounded">
-					<SignalHighIcon className="w-4 h-5 mr-1" />
-					<span>High</span>
-				</Badge>
-			);
-		default:
-			return (
-				<Badge className="flex items-center bg-blue-200 text-blue-800 px-3 py-1 rounded">
-					<SignalLowIcon className="w-4 h-5 mr-1" />
-					<span>Low</span>
-				</Badge>
-			);
-	}
+  switch (priority) {
+    case "Low":
+      return (
+        <Badge className="flex items-center bg-blue-200 text-blue-800 px-3 py-1 rounded">
+          <SignalLowIcon className="w-4 h-5 mr-1" />
+          <span>Low</span>
+        </Badge>
+      );
+    case "Medium":
+      return (
+        <Badge className="flex items-center bg-yellow-200 text-yellow-800 px-3 py-1 rounded">
+          <SignalMediumIcon className="w-4 h-5 mr-1" />
+          <span>Medium</span>
+        </Badge>
+      );
+    case "High":
+      return (
+        <Badge className="flex items-center bg-red-200 text-red-800 px-3 py-1 rounded">
+          <SignalHighIcon className="w-4 h-5 mr-1" />
+          <span>High</span>
+        </Badge>
+      );
+    default:
+      return (
+        <Badge className="flex items-center bg-blue-200 text-blue-800 px-3 py-1 rounded">
+          <SignalLowIcon className="w-4 h-5 mr-1" />
+          <span>Low</span>
+        </Badge>
+      );
+  }
 }
 
 function SignalLowIcon({ className }: { className: string }) {
-	return (
-		<svg
-			className={className}
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="M2 20h.01" />
-			<path d="M7 20v-4" />
-		</svg>
-	);
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 20h.01" />
+      <path d="M7 20v-4" />
+    </svg>
+  );
 }
 
 function SignalMediumIcon({ className }: { className: string }) {
-	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="M2 20h.01" />
-			<path d="M7 20v-4" />
-			<path d="M12 20v-8" />
-		</svg>
-	);
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 20h.01" />
+      <path d="M7 20v-4" />
+      <path d="M12 20v-8" />
+    </svg>
+  );
 }
 
 function SignalHighIcon({ className }: { className: string }) {
-	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		>
-			<path d="M2 20h.01" />
-			<path d="M7 20v-4" />
-			<path d="M12 20v-8" />
-			<path d="M17 20V8" />
-		</svg>
-	);
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 20h.01" />
+      <path d="M7 20v-4" />
+      <path d="M12 20v-8" />
+      <path d="M17 20V8" />
+    </svg>
+  );
 }
