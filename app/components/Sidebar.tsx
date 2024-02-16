@@ -35,7 +35,7 @@ export const Sidebar = ({ tasks }: Props) => {
       <div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="left-24 important-left">
+            <Button data-testid="menu-bar" variant="outline" className="left-24 important-left">
               <Settings />
             </Button>
           </DropdownMenuTrigger>
