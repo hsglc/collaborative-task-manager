@@ -18,7 +18,7 @@ export const Task = ({ task }: Props) => {
   const formattedDate = formatRelativeTime(new Date(task.created_at));
 
   return (
-    <div className="rounded-md p-4 text-black shadow-sm shadow-black space-y-3 ">
+    <div data-testid="task" className="rounded-md p-4 text-black shadow-sm shadow-black space-y-3 ">
       <h4 className="text-2xl font-semibold">{task.name}</h4>
       <div className="flex-center justify-between">
         <p>{task.description}</p>
