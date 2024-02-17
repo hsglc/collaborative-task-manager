@@ -23,7 +23,7 @@ export const EditTaskDialog = ({ task }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="hover:bg-none">
+        <Button name="Edit task" aria-label="Edit task" variant="ghost" className="hover:bg-none">
           <HoverCard>
             <HoverCardTrigger>
               <Pencil className="hover:scale-110 hover:cursor-pointer transition-all" />
