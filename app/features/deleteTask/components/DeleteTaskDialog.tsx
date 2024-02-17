@@ -21,6 +21,7 @@ import {
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
 
+import { Button } from "@/app/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/app/components/ui/hover-card";
 
 type Props = {
@@ -43,14 +44,16 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <HoverCard>
-          <HoverCardTrigger>
-            <Trash2 className="hover:scale-110 hover:cursor-pointer  transition-all " />
-          </HoverCardTrigger>
-          <HoverCardContent className="bg-black text-white text-center text-lg" align="center" sideOffset={20}>
-            Delete this task.
-          </HoverCardContent>
-        </HoverCard>
+        <Button name="Delete" aria-label="Delete task" variant="ghost" className="hover:bg-none">
+          <HoverCard>
+            <HoverCardTrigger>
+              <Trash2 className="hover:scale-110 hover:cursor-pointer  transition-all " />
+            </HoverCardTrigger>
+            <HoverCardContent className="bg-black text-white text-center text-lg" align="center" sideOffset={20}>
+              Delete this task.
+            </HoverCardContent>
+          </HoverCard>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-black text-white">
         <AlertDialogHeader>
@@ -61,7 +64,7 @@ export const DeleteTaskDialog = ({ taskId }: Props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="bg-white text-black">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500 text-white" onClick={deleteTaskHandler}>
+          <AlertDialogAction name="Delete" className="bg-red-500 text-white" onClick={deleteTaskHandler}>
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>
