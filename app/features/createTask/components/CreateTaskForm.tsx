@@ -103,7 +103,7 @@ export function CreateTaskForm({ setIsDialogOpen }: Props) {
             <FormItem>
               <FormLabel>Description </FormLabel>
               <FormControl>
-                <Input className="text-black" placeholder="Task Description" {...field} />
+                <Input className="text-black" placeholder="Task description" {...field} />
               </FormControl>
               <FormDescription>This is your task's description.</FormDescription>
               <FormMessage />
