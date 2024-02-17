@@ -48,11 +48,11 @@ export function EditTaskForm({ task }: Props) {
       <Input name="id" className="hidden" defaultValue={task.id} />
       <Label className="flex flex-col gap-2">
         Name
-        <Input name="name" className="text-black" defaultValue={task.name} />
+        <Input placeholder="name" name="name" className="text-black" defaultValue={task.name} />
       </Label>
       <Label className="flex flex-col gap-2">
         Description
-        <Input name="description" className="text-black" defaultValue={task.description} />
+        <Input placeholder="description" name="description" className="text-black" defaultValue={task.description} />
       </Label>
 
       <Label className="flex flex-col gap-2">
