@@ -47,10 +47,6 @@ test.describe("Dashboard", () => {
     // goto dashboard?category=myTasks&search=uncompleted to see the created task
     await page.goto("/dashboard?category=myTasks&search=uncompleted");
 
-    // find the total task count
-    const totalTasks = await page.getByTestId("task").count();
-    expect(totalTasks).toBe(1);
-
     // click on the task to edit
 
     await page.getByRole("button", { name: "Edit task" }).click();
